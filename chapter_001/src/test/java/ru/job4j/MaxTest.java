@@ -17,17 +17,6 @@ public class MaxTest {
 	@Test
 	public void testMax() {
 		Max values = new Max();
-		values.max(1, 2);
-		assertThat(values.getResult(), is(2));
-	}
-	/**
-	* Test cleanResult.
-	*/
-	@Test
-	public void testCleanResult() {
-		Max values = new Max();
-		values.max(2, 2);
-		values.cleanResult();
-		assertThat(values.getResult(), is(0));
+		assertThat(values.max(1, 2), is(2));
 	}
 }

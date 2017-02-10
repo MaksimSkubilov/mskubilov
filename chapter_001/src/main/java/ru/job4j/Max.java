@@ -9,28 +9,12 @@ package ru.job4j;
 
  public class Max {
 	/**
-	 * Результат сравнения двух чисел.
-	 */
-	private int result;
-	/**
 	 * max. Сравнение.
 	 * @param first - первый аргумент.
 	 * @param second - второй аргумент.
+	 * @return - returns max of two numbers.
 	 */
-	public void max(int first, int second) {
-		this.result = first > second ? first : second;
+	public int max(int first, int second) {
+		return first > second ? first : second;
 	}
-	/**
-	 * Получить результат.
-	 * @return - результат сравнения, возвращает максимальное из двух чисел.
-	 */
-	public int getResult() {
-		return this.result;
-	}
-	/**
-	 * Очистить результат сравнения.
-	 */
-	 public void cleanResult() {
-		this.result = 0;
-	 }
 }
