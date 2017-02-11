@@ -17,4 +17,16 @@ package ru.job4j;
 	public int max(int first, int second) {
 		return first > second ? first : second;
 	}
+	/**
+	 * maxOfThree. Сравнение трех чисел.
+	 * @param first - первый аргумент.
+	 * @param second - второй аргумент.
+	 * @param third - третий аргумент.
+	 * @return - returns max of three numbers.
+	 */
+	public int maxOfThree(int first, int second, int third) {
+		int maxOfFirstAndSecond = this.max(first, second);
+		int maxOfSecondAndThird = this.max(second, third);
+		return this.max(maxOfFirstAndSecond, maxOfSecondAndThird);
+	}
 }

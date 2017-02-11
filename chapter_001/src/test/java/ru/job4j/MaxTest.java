@@ -19,4 +19,12 @@ public class MaxTest {
 		Max values = new Max();
 		assertThat(values.max(1, 2), is(2));
 	}
+	/**
+	* Test maxOfThree.
+	*/
+	@Test
+	public void testMaxOfThree() {
+		Max values = new Max();
+		assertThat(values.maxOfThree(1, 5, 3), is(5));
+	}
 }
