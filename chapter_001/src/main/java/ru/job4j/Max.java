@@ -25,8 +25,6 @@ package ru.job4j;
 	 * @return - returns max of three numbers.
 	 */
 	public int maxOfThree(int first, int second, int third) {
-		int maxOfFirstAndSecond = this.max(first, second);
-		int maxOfSecondAndThird = this.max(second, third);
-		return this.max(maxOfFirstAndSecond, maxOfSecondAndThird);
+		return this.max(first, this.max(second, third));
 	}
 }
