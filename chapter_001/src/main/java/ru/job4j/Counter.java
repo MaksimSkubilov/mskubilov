@@ -14,7 +14,7 @@ package ru.job4j;
 	 * @param finish - конец диапазона.
 	 * @summ - сумма четных чисел.
 	 * @index - индекс для цикла.
-	 * @return - returns max of two numbers.
+	 * @return - возвращает сумму четных чисел.
 	 */
 	public int addFor(int start, int finish) {
 		int summ = 0;
@@ -31,7 +31,7 @@ package ru.job4j;
 	 * @param finish - конец диапазона.
 	 * @summ - сумма четных чисел.
 	 * @index - индекс для цикла.
-	 * @return - returns max of two numbers.
+	 * @return - возвращает сумму четных чисел.
 	 */
 	public int addWhile(int start, int finish) {
 		int summ = 0;
@@ -50,7 +50,7 @@ package ru.job4j;
 	 * @param finish - конец диапазона.
 	 * @summ - сумма четных чисел.
 	 * @index - индекс для цикла.
-	 * @return - returns max of two numbers.
+	 * @return - возвращает сумму четных чисел.
 	 */
 	public int addDoWhile(int start, int finish) {
 		int summ = 0;
