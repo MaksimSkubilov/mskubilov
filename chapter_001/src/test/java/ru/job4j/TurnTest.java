@@ -31,4 +31,26 @@ public class TurnTest {
 		Turn turn = new Turn();
 		assertThat(turn.back(in), is(out));
 	}
+	/**
+	* Test IsTurnSquareEven. - проверка переворачивания квадратного
+	*                      массива на 90 против часовой стрелки.
+	*/
+	@Test
+	public void testIsTurnSquareEven() {
+		int[][] in = new int[][]{{1, 1, 1, 1}, {2, 2, 2, 2}, {3, 3, 3, 3}, {4, 4, 4, 4}};
+		int[][] out = new int[][]{{1, 2, 3, 4}, {1, 2, 3, 4}, {1, 2, 3, 4}, {1, 2, 3, 4}};
+		Turn turn = new Turn();
+		assertThat(turn.backSquare(in), is(out));
+	}
+	/**
+	* Test IsTurnSquareOdd. - проверка переворачивания квадратного
+	*                      массива на 90 против часовой стрелки.
+	*/
+	@Test
+	public void testIsTurnSquareOdd() {
+		int[][] in = new int[][]{{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}, {4, 4, 4, 4, 4}, {5, 5, 5, 5, 5}};
+		int[][] out = new int[][]{{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}};
+		Turn turn = new Turn();
+		assertThat(turn.backSquare(in), is(out));
+	}
 }

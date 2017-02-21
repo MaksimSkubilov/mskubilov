@@ -21,4 +21,23 @@ package ru.job4j;
 		}
 		return args;
 	}
+	/**
+	 * backSquare. Поворачивает на 90 градусов квадратный массив целых чисел.
+	 * @param args - двумерный массив целых чисел.
+	 * @return - возвращает перевернутый массив.
+	 */
+	public int[][] backSquare(int[][] args) {
+		int k = args.length;
+		int n = args[0].length;
+		for (int i = 0; i < k - i; i++) {
+			for (int j = 0; j < n / 2; j++) {
+				int a = args[i][j];
+				args[i][j] = args[j][n - 1 - i];
+				args[j][n - 1 - i] = args[k - 1 - i][n - 1 - j];
+				args[k - 1 - i][n - 1 - j] = args[k - 1 - j][i];
+				args[k - 1 - j][i] = a;
+			}
+		}
+		return args;
+	}
 }
