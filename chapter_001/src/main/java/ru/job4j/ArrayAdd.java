@@ -19,29 +19,24 @@ package ru.job4j;
 		int length2 = values2.length;
 		int length = length1 + length2;
 		int[] add = new int[length];
-						int k = 0;
-						int i = 0;
-						int j = 0;
-							while (j < length - 1) {
-								if (i < length1 && k < length2 && values1[i] > values2[k]) {
-									add[j] = values2[k];
-									k++;
-									j++;
-								} else if (i < length1) {
-									add[j] = values1[i];
-									i++;
-									j++;
-								} else {
-									add[j] = values2[k];
-									k++;
-									j++;
-								}
-							}
-						if (values1[length1 - 1] > values2[length2 - 1]) {
-							add[length - 1] = values1[length1 - 1];
-						} else {
-							add[length - 1] = values2[length2 - 1];
-						}
+			int k = 0;
+			int i = 0;
+			int j = 0;
+				while (j < length) {
+					if (i < length1 && k < length2 && values1[i] > values2[k]) {
+						add[j] = values2[k];
+						k++;
+						j++;
+					} else if (i < length1) {
+						add[j] = values1[i];
+						i++;
+						j++;
+					} else {
+						add[j] = values2[k];
+						k++;
+						j++;
+					}
+				}
 		return add;
 	}
 }

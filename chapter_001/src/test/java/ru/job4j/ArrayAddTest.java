@@ -16,8 +16,8 @@ public class ArrayAddTest {
 	*/
 	@Test
 	public void testIsAdd() {
-		int[] in1 = new int[]{3, 6, 9, 10};
-		int[] in2 = new int[]{1, 2, 11};
+		int[] in1 = new int[]{1, 2, 11};
+		int[] in2 = new int[]{3, 6, 9, 10};
 		int[] out = new int[]{1, 2, 3, 6, 9, 10, 11};
 		ArrayAdd array = new ArrayAdd();
 		assertThat(array.add(in1, in2), is(out));
