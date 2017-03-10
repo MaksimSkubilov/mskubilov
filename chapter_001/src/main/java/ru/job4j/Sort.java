@@ -1,7 +1,7 @@
 package ru.job4j;
 
 /**
- * ЫSort. Сортировка массива методом пузырька.
+ * Sort. Сортировка массива методом пузырька.
  * @author Maksim Skubilov skubilov89@yandex.ru
  * @since 21.02.2017
  * @version 1.0

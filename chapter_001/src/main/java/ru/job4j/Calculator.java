@@ -55,6 +55,6 @@ package ru.job4j;
 	 * Очистить результат вычисления.
 	 */
 	 public void cleanResult() {
-		this.result = 0;
+		this.result = 0d;
 	 }
 }
