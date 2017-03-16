@@ -3,12 +3,13 @@
     <groupId>ru.job4j</groupId>
     <artifactId>junior</artifactId>
     <packaging>pom</packaging>
-    <version>2.0</version>
+    <version>1.0</version>
     <name>junior</name>
     <url>http://job4j.ru/</url>
 
     <modules>
         <module>chapter_001</module>
+		<module>chapter_002</module>
     </modules>
 
     <properties>
@@ -34,6 +35,32 @@
 
     <build>
 	<plugins>
+		<plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.7</version>
+            <configuration>
+                <check>
+                    <branchRate></branchRate>
+                    <lineRate></lineRate>
+                    <haltOnFailure></haltOnFailure>
+                    <totalBranchRate></totalBranchRate>
+                    <totalLineRate></totalLineRate>
+                    <packageLineRate></packageLineRate>
+                    <packageBranchRate></packageBranchRate>
+                </check>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>verify</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>clean</goal>
+                        <goal>check</goal>
+                     </goals>
+                </execution>
+            </executions>
+        </plugin>	
 	    <plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-checkstyle-plugin</artifactId>

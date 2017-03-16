@@ -1,0 +1,18 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+	<groupId>ru.job4j</groupId>
+    <artifactId>chapter_002</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+	<name>chapter_002</name>
+    
+	<parent>
+		<groupId>ru.job4j</groupId>
+		<artifactId>junior</artifactId>
+		<version>1.0</version>
+    </parent>
+	
+	<modules>
+        <module>task_03</module>
+    </modules>
+</project>
