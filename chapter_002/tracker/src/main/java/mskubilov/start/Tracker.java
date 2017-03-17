@@ -58,12 +58,12 @@ public class Tracker {
 		}
 	}
 	/**
-	 * delete. Удаление заявки из массива заявок по ID.
-	 * @param id - ID заявки.
+	 * delete. Удаление заявки из массива заявок.
+	 * @param item - заявка.
 	 */
-	public void delete(String id) {
+	public void delete(Item item) {
 		for (int index = 0; index != this.position; index++) {
-			if (id.equals(this.items[index].getId())) {
+			if (item.getId().equals(this.items[index].getId())) {
 				this.position--;
 				Item[] buffer = new Item[this.items.length - 1];
 				System.arraycopy(this.items, 0, buffer, 0, index);

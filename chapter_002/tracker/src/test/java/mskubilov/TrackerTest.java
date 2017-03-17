@@ -40,7 +40,7 @@ public class TrackerTest {
 		assertThat(tracker.getAll()[2], is(item4));
 
 	//Проверяем корректность работы метода delete(Item)
-		tracker.delete(tracker.getAll()[2].getId());
+		tracker.delete(item4);
 		assertThat(tracker.getAll(), is(items));
 
 	//Проверяем корректность работы метода findByName(String name)
