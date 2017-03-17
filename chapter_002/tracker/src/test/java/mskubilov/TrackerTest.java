@@ -28,23 +28,19 @@ public class TrackerTest {
 		Item[] items = {item1, item2};
 		assertThat(tracker.getAll(), is(items));
 
-	//Проверяем корректность работы метода findById(String id) с помощью созданного
-	//в классе Tracker метода findIdByName(String name) для получения сгенерированного уникального
-	//id заявки
-		String idForTest = tracker.getIdByName("name2");
-		assertThat(tracker.findById(idForTest), is(items[1]));
+	//Проверяем корректность работы метода findById(String id)
+		assertThat(tracker.findById(tracker.getAll()[1].getId()), is(items[1]));
 
 	//Проверяем корректность работы метода update(Item)
 		Item item3 = new Item("name3", "desc3", 3);
 		Item item4 = new Item("name4", "desc4", 4);
 		tracker.add(item3);
-		idForTest = tracker.getIdByName("name3");
-		item4.setId(idForTest);
+		item4.setId(tracker.getAll()[2].getId());
 		tracker.update(item4);
-		assertThat(tracker.findById(idForTest), is(item4));
+		assertThat(tracker.getAll()[2], is(item4));
 
 	//Проверяем корректность работы метода delete(Item)
-		tracker.delete(idForTest);
+		tracker.delete(tracker.getAll()[2].getId());
 		assertThat(tracker.getAll(), is(items));
 
 	//Проверяем корректность работы метода findByName(String name)

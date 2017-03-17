@@ -114,19 +114,4 @@ public class Tracker {
 		}
 		return result;
 	}
-	/**
-	 * getIdByName. Возвращает уникальный id первой совпадающей по имени заявки.
-	 * @param name - имя заявки.
-	 * @return id.
-	 */
-	public String getIdByName(String name) {
-		String result = null;
-		for (int index = 0; index != this.position; index++) {
-			if (name.equals(this.items[index].getName())) {
-				result = this.items[index].getId();
-				break;
-			}
-		}
-		return result;
-	}
 }
