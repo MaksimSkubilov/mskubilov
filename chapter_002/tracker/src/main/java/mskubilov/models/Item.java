@@ -30,17 +30,17 @@ public class Item {
 	 * Item. Дефолтный конструктор класса.
 	 */
 	public Item() {
+		this.create = System.currentTimeMillis();
 	}
 	/**
 	* Item. Конструктор класса.
 	* @param name - имя заявки.
 	* @param description - описание заявки.
-	* @param create - дата создания заявки.
 	*/
-	public Item(String name, String description, long create) {
+	public Item(String name, String description) {
 		this.name = name;
 		this.description = description;
-		this.create = create;
+		this.create = System.currentTimeMillis();
 	}
 
 // Геттеры и сеттеры для полей состояния

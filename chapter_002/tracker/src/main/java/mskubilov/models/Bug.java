@@ -12,9 +12,8 @@ public class Bug extends Item {
 	* Bug. Конструктор класса.
 	* @param name - имя заявки.
 	* @param description - описание заявки.
-	* @param create - дата создания заявки.
 	*/
-	public Bug(String name, String description, long create) {
-		super(name, description, create);
+	public Bug(String name, String description) {
+		super(name, description);
 	}
 }

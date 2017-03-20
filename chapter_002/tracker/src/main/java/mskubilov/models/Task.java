@@ -12,9 +12,8 @@ public class Task extends Item {
 	* Task. Конструктор класса.
 	* @param name - имя заявки.
 	* @param description - описание заявки.
-	* @param create - дата создания заявки.
 	*/
-	public Task(String name, String description, long create) {
-		super(name, description, create);
+	public Task(String name, String description) {
+		super(name, description);
 	}
 }

@@ -9,7 +9,7 @@ import java.util.Arrays;
  * Tracker. Обертка над массивом заявок.
  * @author Maksim Skubilov skubilov89@yandex.ru
  * @since 17.03.2017
- * @version 1.0
+ * @version 1.1
  */
 
 public class Tracker {
@@ -89,12 +89,14 @@ public class Tracker {
 	 * @param name - имя заявки.
 	 * @return Item.
 	 */
-	public Item findByName(String name) {
-		Item result = null;
+	public Item[] findByName(String name) {
+		Item[] result = new Item[0];
+		int pos = 0;
 		for (int index = 0; index != this.position; index++) {
 			if (name.equals(this.items[index].getName())) {
-				result = this.items[index];
-				break;
+				Item[] buffer = Arrays.copyOf(result, result.length + 1);
+				buffer[pos++] = items[index];
+				result = buffer;
 			}
 		}
 		return result;

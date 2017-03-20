@@ -21,8 +21,8 @@ public class TrackerTest {
 
 	//Проверяем корректность работы метода add(Item) и getAll()
 		Tracker tracker = new Tracker();
-		Item item1 = new Item("name1", "desc1", 1);
-		Item item2 = new Item("name2", "desc2", 2);
+		Item item1 = new Item("name1", "desc1");
+		Item item2 = new Item("name2", "desc2");
 		tracker.add(item1);
 		tracker.add(item2);
 		Item[] items = {item1, item2};
@@ -32,8 +32,8 @@ public class TrackerTest {
 		assertThat(tracker.findById(tracker.getAll()[1].getId()), is(items[1]));
 
 	//Проверяем корректность работы метода update(Item)
-		Item item3 = new Item("name3", "desc3", 3);
-		Item item4 = new Item("name4", "desc4", 4);
+		Item item3 = new Item("name3", "desc3");
+		Item item4 = new Item("name4", "desc4");
 		tracker.add(item3);
 		item4.setId(tracker.getAll()[2].getId());
 		tracker.update(item4);
@@ -44,6 +44,9 @@ public class TrackerTest {
 		assertThat(tracker.getAll(), is(items));
 
 	//Проверяем корректность работы метода findByName(String name)
-		assertThat(tracker.findByName("name1"), is(items[0]));
+		tracker.delete(item2);
+		item2.setName("name1");
+		tracker.add(item2);
+		assertThat(tracker.findByName("name1"), is(items));
 	}
 }
