@@ -15,24 +15,29 @@ public class StartUI {
 	 * интерфейс ввода данных.
 	 */
 	private Input input;
+	/**
+	 * трекер.
+	 */
+	private Tracker tracker;
 
 // Конструкторы класса
 	/**
 	 * StartUI. Конструктор класса.
 	 * @param input - интерфейс ввода данных.
+	 * @param tracker - трекер.
 	 */
-	public StartUI(Input input) {
+	public StartUI(Input input, Tracker tracker) {
 		this.input = input;
+		this.tracker = tracker;
 	}
 
 	/**
 	 * init. Метод, реализующий взаимодействие пользователя с трекером.
 	 */
 	public void init() {
-		Tracker tracker = new Tracker();
 		Menu menu = new Menu();
 		boolean isPrintMenu = true;
-		System.out.println("Welcome to  Item's Tracker!");
+		System.out.println("Welcome to Item's Tracker!");
 		String itemID;
 		Item item;
 		Item[] allItems;
@@ -75,13 +80,14 @@ public class StartUI {
 								tracker.update(item);
 								break;
 							default:
-								System.out.println("Sorry, but your selection was wrong!\nEnter number from 0 to 3!");
+								System.out.println("Sorry, but your selection is wrong!\nEnter number from 0 to 3!");
 								break;
 						}
 						} else if (itemID.equals("0")) {
 							isItemExist = true;
 						} else {
-							itemID = input.ask("Please re-enter ID or exit by entering 0: ");
+							System.out.print("Please re-enter ID or exit by entering 0: ");
+							itemID = input.ask("");
 						}
 					} while (!isItemExist);
 					break;
@@ -96,7 +102,8 @@ public class StartUI {
 						} else if (itemID.equals("0")) {
 							isItemExist = true;
 						} else {
-							itemID = input.ask("Please re-enter ID or exit by entering 0: ");
+							System.out.print("Please re-enter ID or exit by entering 0: ");
+							itemID = input.ask("");
 						}
 					} while (!isItemExist);
 					break;
@@ -107,11 +114,12 @@ public class StartUI {
 						if (tracker.findById(itemID) != null && tracker.findById(itemID).getId().equals(itemID)) {
 							isItemExist = true;
 							item = tracker.findById(itemID);
-							System.out.println("Item was founded!\nID: " + item.getId() + " Name: " + item.getName() + " Description: " + item.getDescription() + " Create time:  " + new Date(item.getCreate()));
+							System.out.println("Item was found!\nID: " + item.getId() + " Name: " + item.getName() + " Description: " + item.getDescription() + " Create time:  " + new Date(item.getCreate()));
 						} else if (itemID.equals("0")) {
 							isItemExist = true;
 						} else {
-							itemID = input.ask("Please re-enter ID or exit by entering 0: ");
+							System.out.print("Please re-enter ID or exit by entering 0: ");
+							itemID = input.ask("");
 						}
 					} while (!isItemExist);
 					break;
@@ -124,7 +132,7 @@ public class StartUI {
 							System.out.println("ID: " + items.getId() + " Name: " + items.getName() + " Description: " + items.getDescription() + " Create time:  " + new Date(items.getCreate()));
 							}
 						} else {
-							System.out.println("Your search includes  no Items!");
+							System.out.println("Your search includes no Items!");
 						}
 					break;
 				case "0":
@@ -132,7 +140,7 @@ public class StartUI {
 					isPrintMenu = false;
 					break;
 				default:
-					System.out.println("Sorry, but your selection was wrong!\nEnter number from 0 to 6 next time!");
+					System.out.println("Sorry, but your selection is wrong!\nEnter number from 0 to 6 next time!");
 					break;
 			}
 		} while (isPrintMenu);
@@ -144,6 +152,7 @@ public class StartUI {
 	public static void main(String[] args) {
 		//Input input = new StabInput(new String[] {"create stab task"});
 		Input input = new ConsoleInput();
-		new StartUI(input).init();
+		Tracker tracker = new Tracker();
+		new StartUI(input, tracker).init();
 	}
 }
