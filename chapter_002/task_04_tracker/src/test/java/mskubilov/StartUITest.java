@@ -12,8 +12,8 @@ import static org.hamcrest.Matchers.containsString;
 /**
  * StartUITest.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 24.03.2017
- * @version 2.0
+ * @since 21.03.2017
+ * @version 1.0
  */
 
  public class StartUITest {
@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.containsString;
 	@Test
 	public void whenAddItemThenThereIsTheItemInTracker() {
 		Tracker tracker = new Tracker();
-		Input input = new StubInput(new String[] {"0", "task", "name", "desc", "8"});
+		Input input = new StubInput(new String[] {"1", "name", "desc", "0"});
 		new StartUI(input, tracker).init();
 		assertThat(tracker.getAll()[0].getName(), is("name"));
 		assertThat(tracker.getAll()[0].getDescription(), is("desc"));
@@ -32,17 +32,15 @@ import static org.hamcrest.Matchers.containsString;
 	* Test of editing item.
 	*/
 	@Test
-	public void whenEditItemThenThereIsEditedItemWithOldComments() {
+	public void whenEditItemThenThereIsEditedItem() {
 		Tracker tracker = new Tracker();
 		Item item = new Item("name1", "desc1");
-		item.addComment("comment");
 		tracker.add(item);
 		String id = tracker.getAll()[0].getId();
-		Input input = new StubInput(new String[] {"2", id, "task", "name", "desc", "8"});
+		Input input = new StubInput(new String[] {"3", id, "1", "name", "3", id, "2", "desc", "0"});
 		new StartUI(input, tracker).init();
 		assertThat(tracker.getAll()[0].getName(), is("name"));
 		assertThat(tracker.getAll()[0].getDescription(), is("desc"));
-		assertThat(tracker.getAll()[0].getComments().get(0), is("comment"));
 	}
 	/**
 	* Test of deleting item.
@@ -56,25 +54,12 @@ import static org.hamcrest.Matchers.containsString;
 		tracker.add(item2);
 		Item[] items = {item2};
 		String id = tracker.getAll()[0].getId();
-		Input input = new StubInput(new String[] {"3", id, "8"});
+		Input input = new StubInput(new String[] {"4", id, "0"});
 		new StartUI(input, tracker).init();
 		assertThat(tracker.getAll(), is(items));
 	}
-	/**
-	* Test of adding comment in item.
-	*/
-	@Test
-	public void whenAddCommentInItemThenThereIsRigthComment() {
-		Tracker tracker = new Tracker();
-		Item item1 = new Item("name1", "desc1");
-		tracker.add(item1);
-		String id = tracker.getAll()[0].getId();
-		Input input = new StubInput(new String[] {"6", id, "comment", "8"});
-		new StartUI(input, tracker).init();
-		assertThat(tracker.getAll()[0].getComments().get(0), is("comment"));
-	}
 
-//Для корректного тестирования работы пунктов меню 1, 4, 5, 7 нужно анализировать информацию, которая выводится на экран.
+//Для корректного тестирования работы пунктов меню 2, 5 и 6 нужно анализировать информацию, которая выводится на экран.
 
 	/**
 	* Test of showing all items.
@@ -85,11 +70,12 @@ import static org.hamcrest.Matchers.containsString;
 		System.setOut(new PrintStream(out));
 		Tracker tracker = new Tracker();
 		Item item1 = new Item("name1", "desc1");
+		Item item2 = new Item("name2", "desc2");
 		tracker.add(item1);
-		Input input = new StubInput(new String[] {"1", "8"});
+		tracker.add(item2);
+		Input input = new StubInput(new String[] {"2", "0"});
 		new StartUI(input, tracker).init();
-		assertThat(out.toString(), containsString("name1"));
-		assertThat(out.toString(), containsString("true")); //test for empty comments
+		assertThat(out.toString(), containsString("Tracker includes total "));
 	}
 	/**
 	* Test of searching item by id.
@@ -103,10 +89,10 @@ import static org.hamcrest.Matchers.containsString;
 		Item item2 = new Item("name2", "desc2");
 		tracker.add(item1);
 		tracker.add(item2);
-		String id = tracker.getAll()[1].getId();
-		Input input = new StubInput(new String[] {"4", id, "8"});
+		String id = tracker.getAll()[0].getId();
+		Input input = new StubInput(new String[] {"5", id, "0"});
 		new StartUI(input, tracker).init();
-		assertThat(out.toString(), containsString("name2"));
+		assertThat(out.toString(), containsString("Item was found!"));
 	}
 	/**
 	* Test of searching item by name.
@@ -120,27 +106,9 @@ import static org.hamcrest.Matchers.containsString;
 		Item item2 = new Item("name2", "desc2");
 		tracker.add(item1);
 		tracker.add(item2);
-		Input input = new StubInput(new String[] {"5", "name1", "8"});
+		Input input = new StubInput(new String[] {"6", "name1", "0"});
 		new StartUI(input, tracker).init();
-		assertThat(out.toString(), containsString("name1"));
-	}
-	/**
-	* Test of getting comments of item.
-	*/
-	@Test
-	public void whenGetCommentsOfItemThenThereIsRigthComments() {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(out));
-		Tracker tracker = new Tracker();
-		Item item1 = new Item("name1", "desc1");
-		item1.addComment("comment1");
-		item1.addComment("comment2");
-		tracker.add(item1);
-		String id = tracker.getAll()[0].getId();
-		Input input = new StubInput(new String[] {"7", id, "8"});
-		new StartUI(input, tracker).init();
-		assertThat(out.toString(), containsString("comment1"));
-		assertThat(out.toString(), containsString("comment2"));
+		assertThat(out.toString(), containsString("Your search includes total "));
 	}
 
 //Протестируем вывод информационных сообщений пользователю.
@@ -154,11 +122,13 @@ import static org.hamcrest.Matchers.containsString;
 		System.setOut(new PrintStream(out));
 		Tracker tracker = new Tracker();
 		Item item1 = new Item("name1", "desc1");
+		Item item2 = new Item("name2", "desc2");
 		tracker.add(item1);
-		Input input = new StubInput(new String[] {"4", "625312562312", "5", "fgfhhf", "6", "377467632", "8"});
+		tracker.add(item2);
+		String id = tracker.getAll()[0].getId();
+		Input input = new StubInput(new String[] {"3", "625312562312", id, "4", "0", "0"});
 		new StartUI(input, tracker).init();
-		assertThat(out.toString(), containsString("There is no item of this ID in tracker!"));
-		assertThat(out.toString(), containsString("There are no items of this name in tracker!"));
-		assertThat(out.toString(), containsString("There is no item of ID entered in tracker!"));
+		assertThat(out.toString(), containsString("Please re-enter ID or exit by entering 0: "));
+		assertThat(out.toString(), containsString("Sorry, but your selection is wrong!"));
 	}
  }

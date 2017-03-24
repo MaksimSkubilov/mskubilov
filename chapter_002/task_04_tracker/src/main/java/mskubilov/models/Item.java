@@ -1,7 +1,5 @@
 package mskubilov.models;
 
-import java.util.ArrayList;
-
 /**
  * Item. Заявка. Суперкласс.
  * @author Maksim Skubilov skubilov89@yandex.ru
@@ -26,10 +24,6 @@ public class Item {
 	 * Дата создания заявки.
 	 */
 	private long create;
-	/**
-	 * Массив комментариев.
-	 */
-	private ArrayList<String> comments;
 
 // Конструкторы класса
 	/**
@@ -37,7 +31,6 @@ public class Item {
 	 */
 	public Item() {
 		this.create = System.currentTimeMillis();
-		this.comments = new ArrayList<String>();
 	}
 	/**
 	* Item. Конструктор класса.
@@ -48,7 +41,6 @@ public class Item {
 		this.name = name;
 		this.description = description;
 		this.create = System.currentTimeMillis();
-		this.comments = new ArrayList<String>();
 	}
 
 // Геттеры и сеттеры для полей состояния
@@ -108,26 +100,5 @@ public class Item {
 	 */
 	public long getCreate() {
 		return this.create;
-	}
-	/**
-	 * addComment. Метод для добавления комментария.
-	 * @param comment - дата создания заявки.
-	 */
-	public void addComment(String comment) {
-		this.comments.add(comment);
-	}
-	/**
-	 * getComment. Возвращает комментарии.
-	 * @return комментарий
-	 */
-	public ArrayList<String> getComments() {
-		return this.comments;
-	}
-	/**
-	 * setComment. Записывает комментарии.
-	 * @param comments - комментариии.
-	 */
-	public void setComments(ArrayList<String> comments) {
-		this.comments = comments;
 	}
 }

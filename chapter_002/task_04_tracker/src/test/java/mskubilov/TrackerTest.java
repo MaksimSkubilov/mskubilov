@@ -31,11 +31,6 @@ public class TrackerTest {
 	//Проверяем корректность работы метода findById(String id)
 		assertThat(tracker.findById(tracker.getAll()[1].getId()), is(items[1]));
 
-	//Проверяем корректность работы метода addComment(String comment, String id)
-	//и метода getComments(Item itm)
-		tracker.addComment("comment", tracker.getAll()[0].getId());
-		assertThat(tracker.getComments(item1), is(item1.getComments()));
-
 	//Проверяем корректность работы метода update(Item)
 		Item item3 = new Item("name3", "desc3");
 		Item item4 = new Item("name4", "desc4");
@@ -53,7 +48,5 @@ public class TrackerTest {
 		item2.setName("name1");
 		tracker.add(item2);
 		assertThat(tracker.findByName("name1"), is(items));
-
-
 	}
 }

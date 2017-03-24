@@ -4,7 +4,6 @@ import mskubilov.models.*;
 
 import java.util.Random;
 import java.util.Arrays;
-import java.util.ArrayList;
 
 /**
  * Tracker. Обертка над массивом заявок.
@@ -55,7 +54,6 @@ public class Tracker {
 		for (int index = 0; index != this.items.length; index++) {
 			if (id.equals(this.items[index].getId())) {
 				this.items[index] = item;
-				break;
 			}
 		}
 	}
@@ -113,34 +111,6 @@ public class Tracker {
 		for (Item item: items) {
 			if (item != null && item.getId().equals(id)) {
 				result = item;
-				break;
-			}
-		}
-		return result;
-	}
-	/**
-	 * addComment. Поиск заявки в массиве по ID и добавление комментария.
-	 * @param comment - комментарий.
-	 * @param id - ID заявки.
-	 */
-	public void addComment(String id, String comment) {
-		for (Item item: items) {
-			if (item != null && item.getId().equals(id)) {
-				item.addComment(comment);
-				break;
-			}
-		}
-	}
-	/**
-	 * getComments. Возвращает комментарии к заявке.
-	 * @param itm - заявка.
-	 * @return комментарии.
-	 */
-	public ArrayList<String> getComments(Item itm) {
-		ArrayList<String> result = new ArrayList<String>();
-		for (Item item: items) {
-			if (item != null && item.getId().equals(itm.getId())) {
-				result = item.getComments();
 				break;
 			}
 		}

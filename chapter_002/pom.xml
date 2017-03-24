@@ -14,7 +14,8 @@
 	
 	<modules>
         <module>task_03</module>
-		<module>tracker</module>
+		<module>task_04_tracker</module>
 		<module>task_05_strategy</module>
+		<module>tracker</module>
     </modules>
 </project>

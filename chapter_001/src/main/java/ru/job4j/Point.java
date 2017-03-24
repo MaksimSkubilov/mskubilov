@@ -9,12 +9,11 @@ package ru.job4j;
 
  public class Point {
 	/**
-	 * @param x - координата по оси абсцисс.
-	 * @param y - координата по оси ординат.
+	 * x - координата по оси абсцисс.
 	 */
 	private double x;
 	/**
-	 * @param y - координата по оси ординат.
+	 * y - координата по оси ординат.
 	 */
 	private double y;
 	/**
