@@ -6,7 +6,7 @@ import mskubilov.models.*;
  * MenuTracker. Реализация диалога с пользователем.
  * @author Maksim Skubilov skubilov89@yandex.ru
  * @since 23.03.2017
- * @version 1.0
+ * @version 2.0
  */
 
 public class MenuTracker {
@@ -31,6 +31,10 @@ public class MenuTracker {
 	 * Количество действий.
 	 */
 	public static final int ACTIONS_VOL = actions.length;
+	/**
+	 * Типы заявок.
+	 */
+	private String[] itemType = {"Task", "Bug"};
 
 // Конструкторы класса
 	/**
@@ -97,15 +101,17 @@ public class MenuTracker {
 	 * @param tracker - трекер.
 	 */
 		public void execute(Input input, Tracker tracker) {
-			String typeOfItem = input.ask("Please, enter the item's type (Task or Bug): ");
-			String name = input.ask(String.format("Please, enter the %s's name: ", typeOfItem));
-			String desc = input.ask(String.format("Please, enter the %s's desc: ", typeOfItem));
-			if ("Task".equals(typeOfItem) || "task".equals(typeOfItem)) {
-				tracker.add(new Task(name, desc));
-			} else if ("Bug".equals(typeOfItem) || "bug".equals(typeOfItem)) {
-				tracker.add(new Bug(name, desc));
+			String typeOfItem = input.ask("Please, enter the item's type (Task or Bug): ", itemType);
+			if (!typeOfItem.equals("exit")) {
+				String name = input.ask(String.format("Please, enter the %s's name: ", typeOfItem));
+				String desc = input.ask(String.format("Please, enter the %s's desc: ", typeOfItem));
+				if ("Task".equals(typeOfItem)) {
+					tracker.add(new Task(name, desc));
+				} else {
+					tracker.add(new Bug(name, desc));
+				}
 			} else {
-				tracker.add(new Item(name, desc));
+				System.out.println("");
 			}
 		}
 
@@ -174,23 +180,23 @@ public class MenuTracker {
 	 */
 		public void execute(Input input, Tracker tracker) {
 			Item item;
-			String id = input.ask("Please, enter the item's id for searching: ");
+			String id = input.ask("Please, enter the item's id for searching: ", tracker.getIdsArray());
 			if (tracker.findById(id) != null) {
-				String typeOfItem = input.ask("Please, enter the new item's type (Task or Bug): ");
+				String typeOfItem = input.ask("Please, enter the new item's type (Task or Bug): ", itemType);
+				if (!typeOfItem.equals("exit")) {
 				String name = input.ask(String.format("Please, enter the %s's name: ", typeOfItem));
 				String desc = input.ask(String.format("Please, enter the %s's desc: ", typeOfItem));
-				if ("Task".equals(typeOfItem) || "task".equals(typeOfItem)) {
+				if ("Task".equals(typeOfItem)) {
 					item = new Task(name, desc);
-				} else if ("Bug".equals(typeOfItem) || "bug".equals(typeOfItem)) {
-					item = new Bug(name, desc);
 				} else {
-					item = new Item(name, desc);
+					item = new Bug(name, desc);
 				}
 				item.setId(id);
-				item.setComments(tracker.getComments(item));
+				item.setComments(tracker.getComments(tracker.findById(id)));
 				tracker.update(item);
 			} else {
-					System.out.println("There is no item of this ID in tracker!");
+				System.out.println("");
+			}
 			}
 		}
 
@@ -223,11 +229,9 @@ public class MenuTracker {
 	 * @param tracker - трекер.
 	 */
 		public void execute(Input input, Tracker tracker) {
-			String id = input.ask("Please, enter the item's id: ");
+			String id = input.ask("Please, enter the item's id: ", tracker.getIdsArray());
 			if (tracker.findById(id) != null) {
 				tracker.delete(tracker.findById(id));
-			} else {
-					System.out.println("There is no item of this ID in tracker!");
 			}
 	}
 
@@ -259,15 +263,13 @@ public class MenuTracker {
 	 * @param tracker - трекер.
 	 */
 		public void execute(Input input, Tracker tracker) {
-			String id = input.ask("Please, enter the item's id: ");
+			String id = input.ask("Please, enter the item's id: ", tracker.getIdsArray());
 			Item item = tracker.findById(id);
 			if (item != null) {
 				System.out.printf(
 						"ID: %s NAME: %-15s DESC: %-15s CREATE: %tT %<tD EMPTY_COMMENTS: %b%n",
 						item.getId(), item.getName(), item.getDescription(), item.getCreate(), item.getComments().isEmpty()
 					);
-			} else {
-					System.out.println("There is no item of this ID in tracker!");
 			}
 	}
 
@@ -299,7 +301,10 @@ public class MenuTracker {
 	 * @param tracker - трекер.
 	 */
 		public void execute(Input input, Tracker tracker) {
-			String name = input.ask("Please, enter the item's name: ");
+			String name = input.ask("Please, enter the item's name: ", tracker.getNamesArray());
+			if (name.equals("8")) {
+				System.out.println("");
+			}
 			if (tracker.findByName(name).length > 0) {
 				for (Item item : tracker.findByName(name)) {
 					if (item != null) {
@@ -309,8 +314,6 @@ public class MenuTracker {
 						);
 					}
 				}
-			} else {
-					System.out.println("There are no items of this name in tracker!");
 			}
 		}
 
@@ -342,12 +345,10 @@ public class MenuTracker {
 	 * @param tracker - трекер.
 	 */
 		public void execute(Input input, Tracker tracker) {
-			String id = input.ask("Please, enter the item's id for searching: ");
+			String id = input.ask("Please, enter the item's id for searching: ", tracker.getIdsArray());
 			if (tracker.findById(id) != null) {
-				String comment = input.ask("Please, enter your comment^ ");
+				String comment = input.ask("Please, enter your comment: ");
 				tracker.addComment(id, comment);
-			} else {
-					System.out.println("There is no item of ID entered in tracker!");
 			}
 	}
 
@@ -379,7 +380,7 @@ public class MenuTracker {
 	 * @param tracker - трекер.
 	 */
 		public void execute(Input input, Tracker tracker) {
-			String id = input.ask("Please, enter the item's id for searching: ");
+			String id = input.ask("Please, enter the item's id for searching: ", tracker.getIdsArray());
 			Item item = tracker.findById(id);
 			if (item != null) {
 				for (int i = 0; i < tracker.getComments(item).size(); i++) {

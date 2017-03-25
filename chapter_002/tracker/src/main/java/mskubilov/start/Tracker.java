@@ -2,7 +2,6 @@ package mskubilov.start;
 
 import mskubilov.models.*;
 
-import java.util.Random;
 import java.util.Arrays;
 import java.util.ArrayList;
 
@@ -25,14 +24,14 @@ public class Tracker {
 	/**
 	 * Объект класса Random из пакета java.util для генерации ID.
 	 */
-	private static final Random RN = new Random();
+	private int id = 1;
 
 	/**
 	 * generateId. генерирует уникальный ID заявки.
 	 * @return уникальный ID.
 	 */
 	String generateId() {
-		return String.valueOf(System.currentTimeMillis() + RN.nextInt());
+		return String.valueOf(id++);
 	}
 	/**
 	 * add. Добавление заявки в массив заявок.
@@ -143,6 +142,28 @@ public class Tracker {
 				result = item.getComments();
 				break;
 			}
+		}
+		return result;
+	}
+	/**
+	 * getIdsArray. Возвращает массив йадишников элементов трекера.
+	 * @return массив id.
+	 */
+	public String[] getIdsArray() {
+		String[] result = new String[this.getAll().length];
+		for (int i = 0; i != this.getAll().length; i++) {
+			result[i] = this.getAll()[i].getId();
+		}
+		return result;
+	}
+	/**
+	 * getNamesArray. Возвращает массив йадишников элементов трекера.
+	 * @return массив id.
+	 */
+	public String[] getNamesArray() {
+		String[] result = new String[this.getAll().length];
+		for (int i = 0; i != this.getAll().length; i++) {
+			result[i] = this.getAll()[i].getName();
 		}
 		return result;
 	}

@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.containsString;
 	@Test
 	public void whenAddItemThenThereIsTheItemInTracker() {
 		Tracker tracker = new Tracker();
-		Input input = new StubInput(new String[] {"0", "task", "name", "desc", "8"});
+		Input input = new StubInput(new String[] {"0", "Task", "name", "desc", "8"});
 		new StartUI(input, tracker).init();
 		assertThat(tracker.getAll()[0].getName(), is("name"));
 		assertThat(tracker.getAll()[0].getDescription(), is("desc"));
@@ -38,7 +38,7 @@ import static org.hamcrest.Matchers.containsString;
 		item.addComment("comment");
 		tracker.add(item);
 		String id = tracker.getAll()[0].getId();
-		Input input = new StubInput(new String[] {"2", id, "task", "name", "desc", "8"});
+		Input input = new StubInput(new String[] {"2", id, "Task", "name", "desc", "8"});
 		new StartUI(input, tracker).init();
 		assertThat(tracker.getAll()[0].getName(), is("name"));
 		assertThat(tracker.getAll()[0].getDescription(), is("desc"));
@@ -147,18 +147,39 @@ import static org.hamcrest.Matchers.containsString;
 
 	/**
 	* Test of notification.
+	* @throws MenuOutException - throws.
 	*/
 	@Test
-	public void whenUserInputWrongThenThereIsMessage() {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(out));
+	public void whenUserInputWrongThenThereIsMessage() throws MenuOutException {
 		Tracker tracker = new Tracker();
 		Item item1 = new Item("name1", "desc1");
 		tracker.add(item1);
-		Input input = new StubInput(new String[] {"4", "625312562312", "5", "fgfhhf", "6", "377467632", "8"});
+		Input input = new StubInput(new String[] {"4", "625312562312", "8"});
+		try {
+			new StartUI(input, tracker).init();
+		} catch (MenuOutException mof) {
+			assertThat(mof.getMessage(), containsString("Data you entered is not valid or not found! or 'exit' to exit"));
+			assertThat(mof.getMessage(), containsString("Please try again!"));
+		}
+		input = new StubInput(new String[] {"88", "4", "assdaas", "8"});
+		try {
+			new StartUI(input, tracker).init();
+		} catch (MenuOutException mof) {
+			assertThat(mof.getMessage(), containsString("Please enter the key from menu!"));
+			assertThat(mof.getMessage(), containsString("Out of menu range!"));
+			assertThat(mof.getMessage(), containsString("Data you entered is not valid or not found! or 'exit' to exit"));
+		}
+	}
+	/**
+	* Test of notification.
+	* @throws NumberFormatException - throws.
+	*/
+	@Test (expected = NumberFormatException.class)
+	public void whenUserInputWrongThenThereIsNumberFormatException() throws NumberFormatException {
+		Tracker tracker = new Tracker();
+		Item item1 = new Item("name1", "desc1");
+		tracker.add(item1);
+		Input input = new StubInput(new String[] {"abhdf", "8"});
 		new StartUI(input, tracker).init();
-		assertThat(out.toString(), containsString("There is no item of this ID in tracker!"));
-		assertThat(out.toString(), containsString("There are no items of this name in tracker!"));
-		assertThat(out.toString(), containsString("There is no item of ID entered in tracker!"));
 	}
  }
