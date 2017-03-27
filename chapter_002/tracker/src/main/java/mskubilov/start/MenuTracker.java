@@ -23,12 +23,16 @@ public class MenuTracker {
 	private Tracker tracker;
 
 	/**
+	 * Количество действий пользователя.
+	 */
+	private int position = 0;
+	/**
 	 * Массив возможных действий пользователя.
 	 */
 	private static UserAction[] actions = new UserAction[9];
 
 	/**
-	 * Количество действий.
+	 * Финальное количество действий поьзователя.
 	 */
 	public static final int ACTIONS_VOL = actions.length;
 	/**
@@ -51,15 +55,15 @@ public class MenuTracker {
 	 * fillActions. Метод, заполняющий массив возможных действий пользователя.
 	 */
 	public void fillActions() {
-		this.actions[0] = this.new AddItem();
-		this.actions[1] = this.new ShowItems();
-		this.actions[2] = this.new EditItem();
-		this.actions[3] = this.new DeleteItem();
-		this.actions[4] = this.new FindById();
-		this.actions[5] = this.new FindByName();
-		this.actions[6] = this.new AddComment();
-		this.actions[7] = this.new GetComments();
-		this.actions[8] = this.new ExitTracker();
+		this.actions[this.position++] = this.new AddItem("Add the new item. ");
+		this.actions[this.position++] = this.new ShowItems("Show all items. ");
+		this.actions[this.position++] = this.new EditItem("Edit item. ");
+		this.actions[this.position++] = this.new DeleteItem("Delete item. ");
+		this.actions[this.position++] = this.new FindById("Find item by ID. ");
+		this.actions[this.position++] = this.new FindByName("Find item by name. ");
+		this.actions[this.position++] = this.new AddComment("Add a comment in item. ");
+		this.actions[this.position++] = this.new GetComments("Show item's comments. ");
+		this.actions[this.position++] = this.new ExitTracker("Exit tracker. ");
 	}
 
 	/**
@@ -68,8 +72,7 @@ public class MenuTracker {
 	 */
 	public void select(int key) {
 		this.actions[key].execute(this.input, this.tracker);
-	}
-
+}
 	/**
 	 * show. Метод, показывающий все возможные действия пользователю.
 	 */
@@ -85,8 +88,14 @@ public class MenuTracker {
 /**
  * AddItem. Внутренний класс, реализуюший добавление заявки по интерфейсу UserAction.
  */
-	private class AddItem implements UserAction {
-
+	private class AddItem extends BaseAction {
+	/**
+	 * Конструктор класса.
+	 * @param name - описание действия пользователя.
+	 */
+		private AddItem(String name) {
+			super(name);
+		}
 	/**
 	 * key. Метод для установки уникального ключа действия пользователя.
 	 * @return значение ключа.
@@ -114,20 +123,19 @@ public class MenuTracker {
 				System.out.println("");
 			}
 		}
-
-	/**
-	 * info. Метод для вывода информации о действии.
-	 * @return информацию о действии, пункт меню.
-	 */
-		public String info() {
-			return String.format("%s. %s", this.key(), "Add the new item. ");
-		}
 	}
 
 /**
  * ShowItems. Внутренний класс, реализуюший вывод всех заявок трекера по интерфейсу UserAction.
  */
-	private class ShowItems implements UserAction {
+	private class ShowItems extends BaseAction {
+	/**
+	 * Конструктор класса.
+	 * @param name - описание действия пользователя.
+	 */
+		private ShowItems(String name) {
+			super(name);
+		}
 
 	/**
 	 * key. Метод для установки уникального ключа действия пользователя.
@@ -150,20 +158,19 @@ public class MenuTracker {
 				);
 			}
 		}
-
-	/**
-	 * info. Метод для вывода информации о действии.
-	 * @return информацию о действии, пункт меню.
-	 */
-		public String info() {
-			return String.format("%s. %s", this.key(), "Show all items. ");
-		}
 	}
 
 /**
  * EditItem. Класс, реализуюший редактирование заявки трекера по интерфейсу UserAction.
  */
-	private class EditItem implements UserAction {
+	private class EditItem extends BaseAction {
+	/**
+	 * Конструктор класса.
+	 * @param name - описание действия пользователя.
+	 */
+		private EditItem(String name) {
+			super(name);
+		}
 
 	/**
 	 * key. Метод для установки уникального ключа действия пользователя.
@@ -199,21 +206,20 @@ public class MenuTracker {
 			}
 			}
 		}
-
-	/**
-	 * info. Метод для вывода информации о действии.
-	 * @return информацию о действии, пункт меню.
-	 */
-		public String info() {
-			return String.format("%s. %s", this.key(), "Edit item. ");
-		}
 	}
 
 
 /**
  * DeleteItem. Класс, реализуюший удаление заявки трекера по интерфейсу UserAction.
  */
-	private class DeleteItem implements UserAction {
+	private class DeleteItem extends BaseAction {
+	/**
+	 * Конструктор класса.
+	 * @param name - описание действия пользователя.
+	 */
+		private DeleteItem(String name) {
+			super(name);
+		}
 
 	/**
 	 * key. Метод для установки уникального ключа действия пользователя.
@@ -233,21 +239,20 @@ public class MenuTracker {
 			if (tracker.findById(id) != null) {
 				tracker.delete(tracker.findById(id));
 			}
-	}
-
-	/**
-	 * info. Метод для вывода информации о действии.
-	 * @return информацию о действии, пункт меню.
-	 */
-		public String info() {
-			return String.format("%s. %s", this.key(), "Delete item. ");
 		}
 	}
 
 /**
  * FindById. Класс, реализуюший поиск по ID заявки трекера по интерфейсу UserAction.
  */
-	private class FindById implements UserAction {
+	private class FindById extends BaseAction {
+	/**
+	 * Конструктор класса.
+	 * @param name - описание действия пользователя.
+	 */
+		private FindById(String name) {
+			super(name);
+		}
 
 	/**
 	 * key. Метод для установки уникального ключа действия пользователя.
@@ -271,21 +276,20 @@ public class MenuTracker {
 						item.getId(), item.getName(), item.getDescription(), item.getCreate(), item.getComments().isEmpty()
 					);
 			}
-	}
-
-	/**
-	 * info. Метод для вывода информации о действии.
-	 * @return информацию о действии, пункт меню.
-	 */
-		public String info() {
-			return String.format("%s. %s", this.key(), "Find item by ID. ");
 		}
 	}
 
 /**
  * FindByName. Класс, реализуюший поиск по имени заявки трекера по интерфейсу UserAction.
  */
-	private class FindByName implements UserAction {
+	private class FindByName extends BaseAction {
+	/**
+	 * Конструктор класса.
+	 * @param name - описание действия пользователя.
+	 */
+		private FindByName(String name) {
+			super(name);
+		}
 
 	/**
 	 * key. Метод для установки уникального ключа действия пользователя.
@@ -316,20 +320,19 @@ public class MenuTracker {
 				}
 			}
 		}
-
-	/**
-	 * info. Метод для вывода информации о действии.
-	 * @return информацию о действии, пункт меню.
-	 */
-		public String info() {
-			return String.format("%s. %s", this.key(), "Find item by name. ");
-		}
-		}
+	}
 
 /**
  * AddComment. Класс, реализуюший добавление комментария к заявке трекера по интерфейсу UserAction.
  */
-	private class AddComment implements UserAction {
+	private class AddComment extends BaseAction {
+	/**
+	 * Конструктор класса.
+	 * @param name - описание действия пользователя.
+	 */
+		private AddComment(String name) {
+			super(name);
+		}
 
 	/**
 	 * key. Метод для установки уникального ключа действия пользователя.
@@ -350,21 +353,20 @@ public class MenuTracker {
 				String comment = input.ask("Please, enter your comment: ");
 				tracker.addComment(id, comment);
 			}
-	}
-
-	/**
-	 * info. Метод для вывода информации о действии.
-	 * @return информацию о действии, пункт меню.
-	 */
-		public String info() {
-			return String.format("%s. %s", this.key(), "Add a comment in item. ");
 		}
 	}
 
 /**
  * GetComments. Класс, реализуюший вывод комментариев к заявке трекера по интерфейсу UserAction.
  */
-	private class GetComments implements UserAction {
+	private class GetComments extends BaseAction {
+	/**
+	 * Конструктор класса.
+	 * @param name - описание действия пользователя.
+	 */
+		private GetComments(String name) {
+			super(name);
+		}
 
 	/**
 	 * key. Метод для установки уникального ключа действия пользователя.
@@ -391,20 +393,19 @@ public class MenuTracker {
 					System.out.println("There is no item of this ID in tracker!");
 			}
 		}
-
-	/**
-	 * info. Метод для вывода информации о действии.
-	 * @return информацию о действии, пункт меню.
-	 */
-		public String info() {
-			return String.format("%s. %s", this.key(), "Show item's comments. ");
-		}
 	}
 
 /**
  * ExitTracker. Класс, реализуюший вывод комментариев к заявке трекера по интерфейсу UserAction.
  */
-	private class ExitTracker implements UserAction {
+	private class ExitTracker extends BaseAction {
+	/**
+	 * Конструктор класса.
+	 * @param name - описание действия пользователя.
+	 */
+		private ExitTracker(String name) {
+			super(name);
+		}
 
 	/**
 	 * key. Метод для установки уникального ключа действия пользователя.
@@ -421,14 +422,6 @@ public class MenuTracker {
 	 */
 		public void execute(Input input, Tracker tracker) {
 			System.out.println("Thank you for using tracker!");
-		}
-
-	/**
-	 * info. Метод для вывода информации о действии.
-	 * @return информацию о действии, пункт меню.
-	 */
-		public String info() {
-			return String.format("%s. %s", this.key(), "Exit tracker. ");
 		}
 	}
 }
