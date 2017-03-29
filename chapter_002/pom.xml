@@ -17,5 +17,6 @@
 		<module>task_04_tracker</module>
 		<module>task_05_strategy</module>
 		<module>tracker</module>
+		<module>chess</module>
     </modules>
 </project>
