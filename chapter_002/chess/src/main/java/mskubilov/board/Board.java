@@ -14,7 +14,7 @@ public class Board {
 	/**
 	 * Массив шахматных фигур.
 	 */
-	private Figure[] figures = new Figure[5];
+	private Figure[] figures = new Figure[6];
 	/**
 	 * fillBoard. Метод, заполняющий доску фигурами.
 	 */
@@ -24,6 +24,7 @@ public class Board {
 		figures[2] = new Bishop(new Cell('a', 7));
 		figures[3] = new Bishop(new Cell('a', 1));
 		figures[4] = new Bishop(new Cell('g', 1));
+		figures[5] = new Rook(new Cell('d', 7));
 	}
 	/**
 	 * move. Передвижение фигуры.
@@ -44,9 +45,10 @@ public class Board {
 					way = this.figures[i].way(dest);
 					result = true;
 					break;
-				} else {
-					throw new FigureNotFoundException("На этом месте нет фигуры!");
 				}
+			}
+			if (!result) {
+				throw new FigureNotFoundException("На этом месте нет фигуры!");
 			}
 		} else {
 			throw new FigureNotFoundException("Этого места нет на доске!");

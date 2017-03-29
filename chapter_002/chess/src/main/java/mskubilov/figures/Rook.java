@@ -4,18 +4,18 @@ import mskubilov.board.Cell;
 import mskubilov.exceptions.ImpossibleMoveException;
 
 /**
- * Bishop. Слон, наследуется от Figure.
+ * Rook. Ладья, наследуется от Figure.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 28.03.2017
+ * @since 29.03.2017
  * @version 1.0
  */
 
-public class Bishop extends Figure {
+public class Rook extends Figure {
 	/**
-	 * Bishop. Конструктор класса.
+	 * Rook. Конструктор класса.
 	 * @param position - положение фигуры на доске.
 	*/
-	public Bishop(Cell position) {
+	public Rook(Cell position) {
 		super(position);
 	}
 	/**
@@ -31,38 +31,40 @@ public class Bishop extends Figure {
 		int fromR = this.getPosition().getRow();
 		int toC = Character.digit(dest.getColumn(), 36) - tempC;
 		int toR = dest.getRow();
-		int distanceToNewC = Math.abs(fromC - toC);
-		int distanceToNewR = Math.abs(fromR - toR);
+		int distanceToNewC = fromC - toC;
+		int distanceToNewR = fromR - toR;
 		Cell[] result = new Cell[0];
 		if (dest.isOnBoard()) {
-			if (distanceToNewC == distanceToNewR) {
-				result = new Cell[distanceToNewC];
-				if (toC > fromC && toR > fromR) {
-					for (int i = 0; i != distanceToNewC; i++) {
-						char temp = Character.forDigit(fromC + i + tempC + 1, 36);
-						result[i] = new Cell(temp, fromR + i + 1);
+			if (distanceToNewC == 0) {
+				if (distanceToNewR < 0) {
+					result = new Cell[Math.abs(distanceToNewR)];
+					for (int i = 0; i != Math.abs(distanceToNewR); i++) {
+						result[i] = new Cell(dest.getColumn(), fromR + 1 + i);
 					}
 				}
-				if (toC > fromC && toR < fromR) {
-					for (int i = 0; i != distanceToNewC; i++) {
-						char temp = Character.forDigit(fromC + i + tempC + 1, 36);
-						result[i] = new Cell(temp, fromR - i - 1);
+				if (distanceToNewR > 0) {
+					result = new Cell[Math.abs(distanceToNewR)];
+					for (int i = 0; i != distanceToNewR; i++) {
+						result[i] = new Cell(dest.getColumn(), fromR - 1 - i);
 					}
 				}
-				if (toC < fromC && toR < fromR) {
-					for (int i = 0; i != distanceToNewC; i++) {
-						char temp = Character.forDigit(fromC - i + tempC - 1, 36);
-						result[i] = new Cell(temp, fromR - i - 1);
+			} else if (distanceToNewR == 0) {
+				if (distanceToNewC < 0) {
+					result = new Cell[Math.abs(distanceToNewC)];
+					for (int i = 0; i != Math.abs(distanceToNewC); i++) {
+						char temp = Character.forDigit(fromC + tempC + 1 + i, 36);
+						result[i] = new Cell(temp, fromR);
 					}
 				}
-				if (toC < fromC && toR > fromR) {
+				if (distanceToNewC > 0) {
+					result = new Cell[Math.abs(distanceToNewC)];
 					for (int i = 0; i != distanceToNewC; i++) {
-						char temp = Character.forDigit(fromC - i + tempC - 1, 36);
-						result[i] = new Cell(temp, fromR + i + 1);
+						char temp = Character.forDigit(fromC + tempC - 1 - i, 36);
+						result[i] = new Cell(temp, fromR);
 					}
 				}
 			} else {
-				throw new ImpossibleMoveException("Слон не умеет так ходить!");
+				throw new ImpossibleMoveException("Ладья не умеет так ходить!");
 			}
 		} else {
 			throw new ImpossibleMoveException("Ход за пределы доски!");
@@ -72,9 +74,9 @@ public class Bishop extends Figure {
 	/**
 	 * clone. Метод, реализующий клонирование фигуры с новой позицией.
 	 * @param dest - ход фигуры.
-	 * @return слон с новой позицией.
+	 * @return ладья с новой позицией.
 	 */
 	public Figure clone(Cell dest) {
-		return new Bishop(dest);
+		return new Rook(dest);
 	}
 }
