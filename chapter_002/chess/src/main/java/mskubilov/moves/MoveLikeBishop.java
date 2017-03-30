@@ -54,7 +54,7 @@ public class MoveLikeBishop implements InterfaceOfMoves {
 				}
 			}
 		} else {
-			throw new ImpossibleMoveException("Слон не умеет так ходить!");
+			throw new ImpossibleMoveException("Недопустимый ход!");
 		}
 		return result;
 	}

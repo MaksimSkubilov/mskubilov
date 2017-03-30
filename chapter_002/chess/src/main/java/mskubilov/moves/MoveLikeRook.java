@@ -54,7 +54,7 @@ public class MoveLikeRook implements InterfaceOfMoves {
 				}
 			}
 		} else {
-			throw new ImpossibleMoveException("Ладья не умеет так ходить!");
+			throw new ImpossibleMoveException("Недопустимый ход!");
 		}
 		return result;
 	}
