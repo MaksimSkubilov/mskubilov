@@ -28,7 +28,11 @@ public class Bishop extends Figure {
 	 */
 	@Override
 	public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
-		return new MoveLikeBishop().way(source, dest);
+		if (dest.isOnBoard()) {
+			return new MoveLikeBishop().way(source, dest);
+		} else {
+			throw new ImpossibleMoveException("Ход за пределы доски!");
+		}
 	}
 	/**
 	 * clone. Метод, реализующий клонирование фигуры с новой позицией.

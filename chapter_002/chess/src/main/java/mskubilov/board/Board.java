@@ -14,18 +14,17 @@ public class Board {
 	/**
 	 * Массив шахматных фигур.
 	 */
-	private Figure[] figures = new Figure[7];
+	private Figure[] figures = new Figure[5];
 	/**
 	 * fillBoard. Метод, заполняющий доску фигурами.
 	 */
 	public void fillBoard() {
-		figures[0] = new Bishop(new Cell('d', 4)); //отсюда ходить
+		figures[0] = new Bishop(new Cell('d', 4));
 		figures[1] = new Bishop(new Cell('g', 7));
 		figures[2] = new Bishop(new Cell('a', 7));
 		figures[3] = new Bishop(new Cell('a', 1));
 		figures[4] = new Bishop(new Cell('g', 1));
-		figures[5] = new Rook(new Cell('d', 7));
-		figures[6] = new Queen(new Cell('d', 4));
+
 	}
 	/**
 	 * move. Передвижение фигуры.
@@ -69,6 +68,7 @@ public class Board {
 		}
 		return result;
 	}
+//вспомогательные методы для тестирования
 	/**
 	 * getFigures. Метод, возвращающий фигуры.
 	 * @param i - индекс в массиве.
@@ -76,5 +76,12 @@ public class Board {
 	 */
 	public Figure getFigure(int i) {
 		return this.figures[i];
+	}
+	/**
+	 * setFigureOnD4ForTest. Метод, йстанавливающий тестируемую фигуру.
+	 * @param figure - устанавалвиаемая фигура.
+	 */
+	public void setFigure(Figure figure) {
+		this.figures[0] = figure;
 	}
 }

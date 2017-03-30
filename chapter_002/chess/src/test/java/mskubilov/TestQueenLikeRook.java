@@ -27,9 +27,10 @@ public class TestQueenLikeRook {
 	public void testQueen() throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Queen(new Cell('d', 7)));
 		boolean move = false;
-		Cell source = new Cell('d', 4);
-		Cell dest = new Cell('e', 3);
+		Cell source = new Cell('d', 7);
+		Cell dest = new Cell('d', 6);
 		move = board.move(source, dest);
 		assertThat(move, is(true));
 		assertThat(board.getFigure(0).getPosition(), is(dest));
@@ -45,6 +46,7 @@ public class TestQueenLikeRook {
 				throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Queen(new Cell('d', 7)));
 		boolean move = false;
 		move = board.move(new Cell('d', 1), new Cell('d', 2));
 	}
@@ -59,8 +61,9 @@ public class TestQueenLikeRook {
 				throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Queen(new Cell('d', 7)));
 		boolean move = false;
-		move = board.move(new Cell('d', 4), new Cell('c', 2));
+		move = board.move(new Cell('d', 7), new Cell('c', 2));
 	}
 	/**
 	 * Test of OccupiedWayException.
@@ -73,7 +76,8 @@ public class TestQueenLikeRook {
 				throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Queen(new Cell('d', 7)));
 		boolean move = false;
-		move = board.move(new Cell('d', 4), new Cell('h', 8));
+		move = board.move(new Cell('d', 7), new Cell('h', 7));
 	}
 }

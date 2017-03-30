@@ -19,6 +19,7 @@ public class MoveLikeRook implements InterfaceOfMoves {
 	 * @return массив пройденных фигурой ячеек до места назначения.
 	 */
 	public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
+		Cell[] result = new Cell[0];
 		int tempC = 1 - Character.digit('a', 36);
 		int fromC = Character.digit(source.getColumn(), 36) - tempC;
 		int fromR = source.getRow();
@@ -26,39 +27,34 @@ public class MoveLikeRook implements InterfaceOfMoves {
 		int toR = dest.getRow();
 		int distanceToNewC = fromC - toC;
 		int distanceToNewR = fromR - toR;
-		Cell[] result = new Cell[0];
-		if (dest.isOnBoard()) {
-			if (distanceToNewC == 0) {
-				result = new Cell[Math.abs(distanceToNewR)];
-				if (distanceToNewR < 0) {
-					for (int i = 0; i != Math.abs(distanceToNewR); i++) {
-						result[i] = new Cell(dest.getColumn(), fromR + 1 + i);
-					}
+		if (distanceToNewC == 0) {
+			result = new Cell[Math.abs(distanceToNewR)];
+			if (distanceToNewR < 0) {
+				for (int i = 0; i != Math.abs(distanceToNewR); i++) {
+					result[i] = new Cell(dest.getColumn(), fromR + 1 + i);
 				}
-				if (distanceToNewR > 0) {
-					for (int i = 0; i != distanceToNewR; i++) {
-						result[i] = new Cell(dest.getColumn(), fromR - 1 - i);
-					}
+			}
+			if (distanceToNewR > 0) {
+				for (int i = 0; i != distanceToNewR; i++) {
+					result[i] = new Cell(dest.getColumn(), fromR - 1 - i);
 				}
-			} else if (distanceToNewR == 0) {
-				result = new Cell[Math.abs(distanceToNewC)];
-				if (distanceToNewC < 0) {
-					for (int i = 0; i != Math.abs(distanceToNewC); i++) {
-						char temp = Character.forDigit(fromC + tempC + 1 + i, 36);
-						result[i] = new Cell(temp, fromR);
-					}
+			}
+		} else if (distanceToNewR == 0) {
+			result = new Cell[Math.abs(distanceToNewC)];
+			if (distanceToNewC < 0) {
+				for (int i = 0; i != Math.abs(distanceToNewC); i++) {
+					char temp = Character.forDigit(fromC + tempC + 1 + i, 36);
+					result[i] = new Cell(temp, fromR);
 				}
+			}
 				if (distanceToNewC > 0) {
-					for (int i = 0; i != distanceToNewC; i++) {
-						char temp = Character.forDigit(fromC + tempC - 1 - i, 36);
-						result[i] = new Cell(temp, fromR);
-					}
+				for (int i = 0; i != distanceToNewC; i++) {
+					char temp = Character.forDigit(fromC + tempC - 1 - i, 36);
+					result[i] = new Cell(temp, fromR);
 				}
-			} else {
-				throw new ImpossibleMoveException("Ладья не умеет так ходить!");
 			}
 		} else {
-			throw new ImpossibleMoveException("Ход за пределы доски!");
+			throw new ImpossibleMoveException("Ладья не умеет так ходить!");
 		}
 		return result;
 	}

@@ -27,12 +27,13 @@ public class TestRook {
 	public void testRook() throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Rook(new Cell('d', 7)));
 		boolean move = false;
 		Cell source = new Cell('d', 7);
 		Cell dest = new Cell('d', 6);
 		move = board.move(source, dest);
 		assertThat(move, is(true));
-		assertThat(board.getFigure(5).getPosition(), is(dest));
+		assertThat(board.getFigure(0).getPosition(), is(dest));
 	}
 	/**
 	 * Test of FigureNotFoundException.
@@ -45,6 +46,7 @@ public class TestRook {
 				throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Rook(new Cell('d', 7)));
 		boolean move = false;
 		move = board.move(new Cell('d', 1), new Cell('d', 2));
 	}
@@ -59,6 +61,7 @@ public class TestRook {
 				throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Rook(new Cell('d', 7)));
 		boolean move = false;
 		move = board.move(new Cell('d', 7), new Cell('c', 2));
 	}
@@ -73,7 +76,8 @@ public class TestRook {
 				throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Rook(new Cell('d', 7)));
 		boolean move = false;
-		move = board.move(new Cell('d', 7), new Cell('d', 2));
+		move = board.move(new Cell('d', 7), new Cell('h', 7));
 	}
 }

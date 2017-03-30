@@ -29,10 +29,14 @@ public class Queen extends Figure {
 	 */
 	@Override
 	public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
-		try {
-			return new MoveLikeRook().way(source, dest);
-		} catch (ImpossibleMoveException ime) {
-			return new MoveLikeBishop().way(source, dest);
+		if (dest.isOnBoard()) {
+			try {
+				return new MoveLikeRook().way(source, dest);
+			} catch (ImpossibleMoveException ime) {
+				return new MoveLikeBishop().way(source, dest);
+			}
+		} else {
+			throw new ImpossibleMoveException("Ход за пределы доски!");
 		}
 	}
 	/**

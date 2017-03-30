@@ -27,6 +27,7 @@ public class TestBishop {
 	public void testBishop() throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Bishop(new Cell('d', 4)));
 		boolean move = false;
 		Cell source = new Cell('d', 4);
 		Cell dest = new Cell('e', 3);
@@ -45,6 +46,7 @@ public class TestBishop {
 				throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Bishop(new Cell('d', 4)));
 		boolean move = false;
 		move = board.move(new Cell('d', 1), new Cell('d', 2));
 	}
@@ -59,6 +61,7 @@ public class TestBishop {
 				throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Bishop(new Cell('d', 4)));
 		boolean move = false;
 		move = board.move(new Cell('d', 4), new Cell('c', 2));
 	}
@@ -73,7 +76,8 @@ public class TestBishop {
 				throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
 		Board board = new Board();
 		board.fillBoard();
+		board.setFigure(new Bishop(new Cell('d', 4)));
 		boolean move = false;
-		move = board.move(new Cell('d', 4), new Cell('h', 8));
+		move = board.move(new Cell('d', 4), new Cell('g', 7));
 	}
 }
