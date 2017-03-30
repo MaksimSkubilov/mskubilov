@@ -14,7 +14,7 @@ public class Board {
 	/**
 	 * Массив шахматных фигур.
 	 */
-	private Figure[] figures = new Figure[6];
+	private Figure[] figures = new Figure[7];
 	/**
 	 * fillBoard. Метод, заполняющий доску фигурами.
 	 */
@@ -25,6 +25,7 @@ public class Board {
 		figures[3] = new Bishop(new Cell('a', 1));
 		figures[4] = new Bishop(new Cell('g', 1));
 		figures[5] = new Rook(new Cell('d', 7));
+		figures[6] = new Queen(new Cell('d', 4));
 	}
 	/**
 	 * move. Передвижение фигуры.
@@ -42,7 +43,7 @@ public class Board {
 		if (source.isOnBoard()) {
 			for (i = 0; i != this.figures.length; i++) {
 				if (source.equals(this.figures[i].getPosition())) {
-					way = this.figures[i].way(dest);
+					way = this.figures[i].way(source, dest);
 					result = true;
 					break;
 				}

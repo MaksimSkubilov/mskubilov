@@ -2,21 +2,22 @@ package mskubilov.figures;
 
 import mskubilov.board.Cell;
 import mskubilov.exceptions.ImpossibleMoveException;
+import mskubilov.moves.MoveLikeRook;
 import mskubilov.moves.MoveLikeBishop;
 
 /**
- * Bishop. Слон, наследуется от Figure.
+ * Queen. Ферзь, наследуется от Figure.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 28.03.2017
- * @version 2.0
+ * @since 30.03.2017
+ * @version 1.0
  */
 
-public class Bishop extends Figure {
+public class Queen extends Figure {
 	/**
-	 * Bishop. Конструктор класса.
+	 * Queen. Конструктор класса.
 	 * @param position - положение фигуры на доске.
 	*/
-	public Bishop(Cell position) {
+	public Queen(Cell position) {
 		super(position);
 	}
 	/**
@@ -28,14 +29,18 @@ public class Bishop extends Figure {
 	 */
 	@Override
 	public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
-		return new MoveLikeBishop().way(source, dest);
+		try {
+			return new MoveLikeRook().way(source, dest);
+		} catch (ImpossibleMoveException ime) {
+			return new MoveLikeBishop().way(source, dest);
+		}
 	}
 	/**
 	 * clone. Метод, реализующий клонирование фигуры с новой позицией.
 	 * @param dest - ход фигуры.
-	 * @return слон с новой позицией.
+	 * @return ладья с новой позицией.
 	 */
 	public Figure clone(Cell dest) {
-		return new Bishop(dest);
+		return new Queen(dest);
 	}
 }
