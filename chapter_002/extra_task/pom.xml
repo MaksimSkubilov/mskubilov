@@ -1,0 +1,15 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+	<groupId>mskubilov</groupId>
+    <artifactId>extra_task</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0</version>
+	<name>extra_task</name>
+	
+    <parent>
+		<groupId>ru.job4j</groupId>
+		<artifactId>chapter_002</artifactId>
+		<version>1.0</version>
+    </parent>
+
+</project>
