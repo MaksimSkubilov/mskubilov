@@ -20,7 +20,8 @@ public class TestSnake {
 	public void testSnake() throws ArrayIndexOutOfBoundsException {
 		int[][] source = {{1, 2}, {1, 2}};
 		int[] out = {1, 2, 2, 1};
-		int[] result = Snake.toArray(source);
+		Snake snake = new Snake();
+		int[] result = snake.toArray(source);
 		assertThat(result, is(out));
 	}
 	/**
@@ -31,7 +32,8 @@ public class TestSnake {
 	public void testSnakeOnRound3() throws ArrayIndexOutOfBoundsException {
 		int[][] source = {{1, 2, 3}, {1, 2, 3}, {1, 2, 3}};
 		int[] out = {1, 2, 3, 3, 3, 2, 1, 1, 2};
-		int[] result = SnakeOnRound.toArray(source);
+		SnakeOnRound snakeOnRound = new SnakeOnRound();
+		int[] result = snakeOnRound.toArray(source);
 		assertThat(result, is(out));
 	}
 	/**
@@ -42,23 +44,25 @@ public class TestSnake {
 	public void testSnakeOnRound2() throws ArrayIndexOutOfBoundsException {
 		int[][] source = {{1, 2}, {1, 2}};
 		int[] out = {1, 2, 2, 1};
-		int[] result = SnakeOnRound.toArray(source);
+		SnakeOnRound snakeOnRound = new SnakeOnRound();
+		int[] result = snakeOnRound.toArray(source);
 		assertThat(result, is(out));
 	}
-		/**
+	/**
 	 * Test of snaking square Array on round.
 	 * @throws ArrayIndexOutOfBoundsException - исключение неквадратного массива.
 	 */
 	@Test
 	public void testSnakeOnRound4() throws ArrayIndexOutOfBoundsException {
 		int[][] source = {
-							{1, 2, 3, 4},
-							{1, 2, 3, 4},
-							{1, 2, 3, 4},
-							{1, 2, 3, 4},
-							};
+				{1, 2, 3, 4},
+				{1, 2, 3, 4},
+				{1, 2, 3, 4},
+				{1, 2, 3, 4},
+		};
 		int[] out = {1, 2, 3, 4, 4, 4, 4, 3, 2, 1, 1, 1, 2, 3, 3, 2};
-		int[] result = SnakeOnRound.toArray(source);
+		SnakeOnRound snakeOnRound = new SnakeOnRound();
+		int[] result = snakeOnRound.toArray(source);
 		assertThat(result, is(out));
 	}
 }

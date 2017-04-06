@@ -7,14 +7,14 @@ package mskubilov;
  * @version 1.0
  */
 
-public abstract class SnakeOnRound {
+public class SnakeOnRound {
 	/**
 	 * toArray. Возвращает по кругу змейкой в одномерный массив значения двумерного массива.
 	 * @param source - квадратный массив.
 	 * @throws ArrayIndexOutOfBoundsException - исключение неквадратного массива.
 	 * @return массив значений квадратного массива змейкой.
 	 */
-	public static int[] toArray(int[][] source) throws ArrayIndexOutOfBoundsException {
+	public int[] toArray(int[][] source) throws ArrayIndexOutOfBoundsException {
 		int column = 0;
 		if (source.length != 0) {
 			for (int i = 0; i != source.length; i++) {
