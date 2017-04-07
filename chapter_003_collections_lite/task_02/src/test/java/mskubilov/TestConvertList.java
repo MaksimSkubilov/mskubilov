@@ -40,6 +40,11 @@ public class TestConvertList {
         assertThat(convArray[1].length, is(5));
         assertThat(convArray[1][3], is(9));
         assertThat(convArray[1][4], is(0));
+        convArray = cl.toArray(arrayList, 3);
+        assertThat(convArray.length, is(3));
+        assertThat(convArray[1].length, is(3));
+        assertThat(convArray[0][2], is(4));
+        assertThat(convArray[2][2], is(9));
     }
     /**
      * Test of converting of List with int[] elements to ArrayList.

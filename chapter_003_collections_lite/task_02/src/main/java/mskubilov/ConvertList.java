@@ -34,7 +34,12 @@ public class ConvertList {
      * @return двумерный массив, полученный из коллекции list.
      */
     public int[][] toArray(List<Integer> list, int rows) {
-        int size = list.size() / rows + 1;
+        int size;
+        if (list.size() % rows == 0) {
+            size = list.size() / rows;;
+        } else {
+            size = list.size() / rows + 1;
+        }
         int[][] result = new int[rows][size];
         Iterator it = list.iterator();
         int i = 0;
