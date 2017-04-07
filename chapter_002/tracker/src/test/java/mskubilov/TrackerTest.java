@@ -6,11 +6,13 @@ import static org.junit.Assert.assertThat;
 import mskubilov.models.*;
 import mskubilov.start.*;
 
+import java.util.ArrayList;
+
 /**
  * TrackerTest.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 17.03.2017
- * @version 1.0
+ * @since 07.04.2017
+ * @version 2.0
  */
 public class TrackerTest {
 	/**
@@ -25,24 +27,26 @@ public class TrackerTest {
 		Item item2 = new Item("name2", "desc2");
 		tracker.add(item1);
 		tracker.add(item2);
-		Item[] items = {item1, item2};
+		ArrayList<Item> items = new ArrayList<Item>();
+		items.add(item1);
+		items.add(item2);
 		assertThat(tracker.getAll(), is(items));
 
 	//Проверяем корректность работы метода findById(String id)
-		assertThat(tracker.findById(tracker.getAll()[1].getId()), is(items[1]));
+		assertThat(tracker.findById(tracker.getAll().get(1).getId()), is(items.get(1)));
 
 	//Проверяем корректность работы метода addComment(String comment, String id)
 	//и метода getComments(Item itm)
-		tracker.addComment("comment", tracker.getAll()[0].getId());
+		tracker.addComment("comment", tracker.getAll().get(0).getId());
 		assertThat(tracker.getComments(item1), is(item1.getComments()));
 
 	//Проверяем корректность работы метода update(Item)
 		Item item3 = new Item("name3", "desc3");
 		Item item4 = new Item("name4", "desc4");
 		tracker.add(item3);
-		item4.setId(tracker.getAll()[2].getId());
+		item4.setId(tracker.getAll().get(2).getId());
 		tracker.update(item4);
-		assertThat(tracker.getAll()[2], is(item4));
+		assertThat(tracker.getAll().get(2), is(item4));
 
 	//Проверяем корректность работы метода delete(Item)
 		tracker.delete(item4);

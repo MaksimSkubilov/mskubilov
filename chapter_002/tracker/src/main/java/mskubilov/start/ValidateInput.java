@@ -1,10 +1,12 @@
 package mskubilov.start;
 
+import java.util.ArrayList;
+
 /**
  * ValidateInput. Запрос ввода данных у пользователя, реализует интерфейс Input, расширяет ConsileInput.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 25.03.2017
- * @version 1.0
+ * @since 07.04.2017
+ * @version 2.0
  */
 
 public class ValidateInput extends ConsoleInput {
@@ -15,7 +17,7 @@ public class ValidateInput extends ConsoleInput {
 	 * @return ключ.
 	 */
 
-	public int ask(String question, int[] range) {
+	public int ask(String question, ArrayList<Integer> range) {
 		boolean invalid = true;
 		int value = -1;
 		do {
@@ -38,12 +40,12 @@ public class ValidateInput extends ConsoleInput {
 	 * @return ключ.
 	 */
 
-	 public String ask(String question, String[] range) {
+	 public String ask(ArrayList<String> range, String question) {
 		boolean invalid = true;
 		String type = "Item";
 		do {
 			try {
-				type = super.ask(question, range);
+				type = super.ask(range, question);
 				invalid = false;
 			} catch (MenuOutException moe)  {
 				System.out.println("Data you entered is not valid or not found! or type 'exit' to exit");

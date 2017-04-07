@@ -1,12 +1,12 @@
 package mskubilov.start;
 
-import mskubilov.models.*;
+import java.util.ArrayList;
 
 /**
  * StartUI. Класс для запуска трекера.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 23.03.2017
- * @version 2.0
+ * @since 07.04.2017
+ * @version 3.0
  */
 
 public class StartUI {
@@ -21,7 +21,7 @@ public class StartUI {
 	/**
 	 * диапазон меню.
 	 */
-	private int[] range;;
+	private ArrayList<Integer> range;;
 
 // Конструкторы класса
 	/**
@@ -40,23 +40,23 @@ public class StartUI {
 	public void init() {
 		MenuTracker menu = new MenuTracker(this.input, this.tracker);
 		menu.fillActions();
-		this.range = new int[menu.ACTIONS_VOL];
-		for (int i = 0; i != menu.ACTIONS_VOL; i++) {
-			this.range[i] = i;
+		range = new ArrayList<Integer>();
+		for (int i = 0; i != menu.getActionsVol(); i++) {
+			this.range.add(i);
 		}
 		int menuPos = -1;
 		do {
 			menuPos = -1;
 			menu.show();
 			do {
-				if (!(menuPos == 0) && tracker.getAll().length == 0) {
+				if (!(menuPos == 0) && tracker.getAll().size() == 0) {
 					do {
 						menuPos = input.ask("The tracker is empty now. Please, select 0 to add item or 8 to exit: ", range);
 					} while (!(menuPos == 0) && !(menuPos == 8));
 				} else {
 				menuPos = input.ask("Please, select menu position: ", range);
 				}
-			} while (menuPos >= menu.ACTIONS_VOL);
+			} while (menuPos >= menu.getActionsVol());
 			menu.select(menuPos);
 		} while (!(menuPos == 8));
 	}

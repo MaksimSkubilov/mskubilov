@@ -1,17 +1,19 @@
 package mskubilov.start;
 
+import java.util.ArrayList;
+
 /**
  * StubInput. Имитация ввода данных пользователем, реализует интерфейс Input.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 21.03.2017
- * @version 2.0
+ * @since 07.04.2017
+ * @version 3.0
  */
 
 public class StubInput implements Input {
 	/**
 	 * Массив ответов пользователя.
 	 */
-	private String[] answers;
+	private ArrayList<String> answers;
 	/**
 	 * Позиция в массиве.
 	 */
@@ -23,7 +25,7 @@ public class StubInput implements Input {
 	 * @param answers - массив ответов пользователя.
 	 */
 
-	public StubInput(String[] answers) {
+	public StubInput(ArrayList<String> answers) {
 		this.answers = answers;
 	}
 
@@ -34,7 +36,7 @@ public class StubInput implements Input {
 	 * @return ответ из массива ответов.
 	 */
 	public String ask(String question) {
-		return answers[position++];
+		return answers.get(position++);
 	}
 	/**
 	 * ask. Метод, реализующий взаимодействие объекта с трекером.
@@ -42,8 +44,8 @@ public class StubInput implements Input {
 	 * @param range - диапазон разрешенных значений.
 	 * @return ответ из массива ответов.
 	 */
-	public int ask(String question, int[] range) {
-		return Integer.valueOf(answers[position++]);
+	public int ask(String question, ArrayList<Integer> range) {
+		return Integer.valueOf(answers.get(position++));
 	}
 	/**
 	 * ask. Метод, реализующий взаимодействие объекта с трекером.
@@ -51,7 +53,7 @@ public class StubInput implements Input {
 	 * @param range - диапазон разрешенных значений.
 	 * @return ответ из массива ответов.
 	 */
-	public String ask(String question, String[] range) {
-		return answers[position++];
+	public String ask(ArrayList<String> range, String question) {
+		return answers.get(position++);
 	}
 }

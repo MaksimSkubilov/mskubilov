@@ -4,7 +4,7 @@
     <artifactId>tracker</artifactId>
     <packaging>jar</packaging>
     <version>2.0</version>
-	<name>tracker-2.0</name>
+	<name>ch_002_tracker-2.0</name>
 	
     <parent>
 		<groupId>ru.job4j</groupId>

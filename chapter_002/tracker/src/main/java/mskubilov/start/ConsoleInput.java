@@ -5,8 +5,8 @@ import java.util.*;
 /**
  * ConsoleInput. Запрос ввода данных у пользователя, реализует интерфейс Input.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 20.03.2017
- * @version 2.0
+ * @since 07.04.2017
+ * @version 3.0
  */
 
 public class ConsoleInput implements Input {
@@ -29,11 +29,11 @@ public class ConsoleInput implements Input {
 	 * @param range - диапазон разрешенных значений.
 	 * @return ключ или исключение.
 	 */
-	public int ask(String question, int[] range) {
+	public int ask(String question, ArrayList<Integer> range) {
 		int key = Integer.valueOf(this.ask(question));
 		boolean exist = false;
-		for (int value : range) {
-			if (value == key) {
+		for (Integer value : range) {
+			if (Integer.valueOf(value) == key) {
 				exist = true;
 				break;
 			}
@@ -52,7 +52,7 @@ public class ConsoleInput implements Input {
 	 * @return ключ.
 	 */
 
-	 public String ask(String question, String[] range) {
+	 public String ask(ArrayList<String> range, String question) {
 		String key = this.ask(question);
 		boolean exist = false;
 		for (String type : range) {

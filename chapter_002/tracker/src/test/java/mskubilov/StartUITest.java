@@ -5,15 +5,18 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import mskubilov.models.*;
 import mskubilov.start.*;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+
 import static org.hamcrest.Matchers.containsString;
 
 /**
  * StartUITest.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 24.03.2017
- * @version 2.0
+ * @since 07.04.2017
+ * @version 3.0
  */
 
  public class StartUITest {
@@ -23,10 +26,16 @@ import static org.hamcrest.Matchers.containsString;
 	@Test
 	public void whenAddItemThenThereIsTheItemInTracker() {
 		Tracker tracker = new Tracker();
-		Input input = new StubInput(new String[] {"0", "Task", "name", "desc", "8"});
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("0");
+		answers.add("Task");
+		answers.add("name");
+		answers.add("desc");
+		answers.add("8");
+		Input input = new StubInput(answers);
 		new StartUI(input, tracker).init();
-		assertThat(tracker.getAll()[0].getName(), is("name"));
-		assertThat(tracker.getAll()[0].getDescription(), is("desc"));
+		assertThat(tracker.getAll().get(0).getName(), is("name"));
+		assertThat(tracker.getAll().get(0).getDescription(), is("desc"));
 	}
 	/**
 	* Test of editing item.
@@ -37,12 +46,19 @@ import static org.hamcrest.Matchers.containsString;
 		Item item = new Item("name1", "desc1");
 		item.addComment("comment");
 		tracker.add(item);
-		String id = tracker.getAll()[0].getId();
-		Input input = new StubInput(new String[] {"2", id, "Task", "name", "desc", "8"});
+		String id = tracker.getAll().get(0).getId();
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("2");
+		answers.add(id);
+		answers.add("Task");
+		answers.add("name");
+		answers.add("desc");
+		answers.add("8");
+		Input input = new StubInput(answers);
 		new StartUI(input, tracker).init();
-		assertThat(tracker.getAll()[0].getName(), is("name"));
-		assertThat(tracker.getAll()[0].getDescription(), is("desc"));
-		assertThat(tracker.getAll()[0].getComments().get(0), is("comment"));
+		assertThat(tracker.getAll().get(0).getName(), is("name"));
+		assertThat(tracker.getAll().get(0).getDescription(), is("desc"));
+		assertThat(tracker.getAll().get(0).getComments().get(0), is("comment"));
 	}
 	/**
 	* Test of deleting item.
@@ -54,9 +70,14 @@ import static org.hamcrest.Matchers.containsString;
 		Item item2 = new Item("name2", "desc2");
 		tracker.add(item1);
 		tracker.add(item2);
-		Item[] items = {item2};
-		String id = tracker.getAll()[0].getId();
-		Input input = new StubInput(new String[] {"3", id, "8"});
+		ArrayList<Item> items = new ArrayList<Item>();
+		items.add(item2);
+		String id = tracker.getAll().get(0).getId();
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("3");
+		answers.add(id);
+		answers.add("8");
+		Input input = new StubInput(answers);
 		new StartUI(input, tracker).init();
 		assertThat(tracker.getAll(), is(items));
 	}
@@ -68,10 +89,15 @@ import static org.hamcrest.Matchers.containsString;
 		Tracker tracker = new Tracker();
 		Item item1 = new Item("name1", "desc1");
 		tracker.add(item1);
-		String id = tracker.getAll()[0].getId();
-		Input input = new StubInput(new String[] {"6", id, "comment", "8"});
+		String id = tracker.getAll().get(0).getId();
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("6");
+		answers.add(id);
+		answers.add("comment");
+		answers.add("8");
+		Input input = new StubInput(answers);
 		new StartUI(input, tracker).init();
-		assertThat(tracker.getAll()[0].getComments().get(0), is("comment"));
+		assertThat(tracker.getAll().get(0).getComments().get(0), is("comment"));
 	}
 
 //Для корректного тестирования работы пунктов меню 1, 4, 5, 7 нужно анализировать информацию, которая выводится на экран.
@@ -86,7 +112,10 @@ import static org.hamcrest.Matchers.containsString;
 		Tracker tracker = new Tracker();
 		Item item1 = new Item("name1", "desc1");
 		tracker.add(item1);
-		Input input = new StubInput(new String[] {"1", "8"});
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("1");
+		answers.add("8");
+		Input input = new StubInput(answers);
 		new StartUI(input, tracker).init();
 		assertThat(out.toString(), containsString("name1"));
 		assertThat(out.toString(), containsString("true")); //test for empty comments
@@ -103,8 +132,12 @@ import static org.hamcrest.Matchers.containsString;
 		Item item2 = new Item("name2", "desc2");
 		tracker.add(item1);
 		tracker.add(item2);
-		String id = tracker.getAll()[1].getId();
-		Input input = new StubInput(new String[] {"4", id, "8"});
+		String id = tracker.getAll().get(1).getId();
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("4");
+		answers.add(id);
+		answers.add("8");
+		Input input = new StubInput(answers);
 		new StartUI(input, tracker).init();
 		assertThat(out.toString(), containsString("name2"));
 	}
@@ -120,7 +153,11 @@ import static org.hamcrest.Matchers.containsString;
 		Item item2 = new Item("name2", "desc2");
 		tracker.add(item1);
 		tracker.add(item2);
-		Input input = new StubInput(new String[] {"5", "name1", "8"});
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("5");
+		answers.add("name1");
+		answers.add("8");
+		Input input = new StubInput(answers);
 		new StartUI(input, tracker).init();
 		assertThat(out.toString(), containsString("name1"));
 	}
@@ -136,8 +173,12 @@ import static org.hamcrest.Matchers.containsString;
 		item1.addComment("comment1");
 		item1.addComment("comment2");
 		tracker.add(item1);
-		String id = tracker.getAll()[0].getId();
-		Input input = new StubInput(new String[] {"7", id, "8"});
+		String id = tracker.getAll().get(0).getId();
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("7");
+		answers.add(id);
+		answers.add("8");
+		Input input = new StubInput(answers);
 		new StartUI(input, tracker).init();
 		assertThat(out.toString(), containsString("comment1"));
 		assertThat(out.toString(), containsString("comment2"));
@@ -154,14 +195,23 @@ import static org.hamcrest.Matchers.containsString;
 		Tracker tracker = new Tracker();
 		Item item1 = new Item("name1", "desc1");
 		tracker.add(item1);
-		Input input = new StubInput(new String[] {"4", "625312562312", "8"});
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("4");
+		answers.add("625312562312");
+		answers.add("8");
+		Input input = new StubInput(answers);
 		try {
 			new StartUI(input, tracker).init();
 		} catch (MenuOutException mof) {
 			assertThat(mof.getMessage(), containsString("Data you entered is not valid or not found! or 'exit' to exit"));
 			assertThat(mof.getMessage(), containsString("Please try again!"));
 		}
-		input = new StubInput(new String[] {"88", "4", "assdaas", "8"});
+		answers = new ArrayList<String>();
+		answers.add("88");
+		answers.add("4");
+		answers.add("sadsaas");
+		answers.add("8");
+		input = new StubInput(answers);
 		try {
 			new StartUI(input, tracker).init();
 		} catch (MenuOutException mof) {
@@ -179,7 +229,10 @@ import static org.hamcrest.Matchers.containsString;
 		Tracker tracker = new Tracker();
 		Item item1 = new Item("name1", "desc1");
 		tracker.add(item1);
-		Input input = new StubInput(new String[] {"abhdf", "8"});
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add("sdada");
+		answers.add("8");
+		Input input = new StubInput(answers);
 		new StartUI(input, tracker).init();
 	}
  }

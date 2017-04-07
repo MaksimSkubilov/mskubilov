@@ -2,25 +2,20 @@ package mskubilov.start;
 
 import mskubilov.models.*;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 
 /**
  * Tracker. Обертка над массивом заявок.
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @since 17.03.2017
- * @version 1.1
+ * @since 07.04.2017
+ * @version 3.0
  */
 
 public class Tracker {
 	/**
 	 * Массив заявок.
 	 */
-	private Item[] items = new Item[0];
-	/**
-	 * Индекс в массиве заявок, по которому добавляется текущая заявка.
-	 */
-	private int position = 0;
+	private ArrayList<Item> items = new ArrayList<Item>();
 	/**
 	 * Объект класса Random из пакета java.util для генерации ID.
 	 */
@@ -40,9 +35,7 @@ public class Tracker {
 	 */
 	public Item add(Item item) {
 		item.setId(this.generateId());
-		Item[] buffer = Arrays.copyOf(this.items, this.items.length + 1);
-		buffer[this.position++] = item;
-		this.items = buffer;
+		items.add(item);
 		return item;
 	}
 	/**
@@ -51,9 +44,10 @@ public class Tracker {
 	 */
 	public void update(Item item) {
 		String id = item.getId();
-		for (int index = 0; index != this.items.length; index++) {
-			if (id.equals(this.items[index].getId())) {
-				this.items[index] = item;
+		for (int index = 0; index != this.items.size(); index++) {
+			if (id.equals(this.items.get(index).getId())) {
+				this.items.remove(index);
+				this.items.add(item);
 				break;
 			}
 		}
@@ -63,13 +57,9 @@ public class Tracker {
 	 * @param item - заявка.
 	 */
 	public void delete(Item item) {
-		for (int index = 0; index != this.position; index++) {
-			if (item.getId().equals(this.items[index].getId())) {
-				this.position--;
-				Item[] buffer = new Item[this.items.length - 1];
-				System.arraycopy(this.items, 0, buffer, 0, index);
-				System.arraycopy(this.items, index + 1, buffer, index, this.items.length - index - 1);
-				this.items = buffer;
+		for (int index = 0; index != this.items.size(); index++) {
+			if (item.getId().equals(this.items.get(index).getId())) {
+				this.items.remove(index);
 				break;
 			}
 		}
@@ -78,26 +68,24 @@ public class Tracker {
 	 * getAll. Возвращает массив заявок.
 	 * @return массив всех текущих заявок.
 	 */
-	public Item[] getAll() {
-		Item[] result = new Item[this.position];
-		for (int index = 0; index != this.position; index++) {
-			result[index] = this.items[index];
+	public ArrayList<Item> getAll() {
+		ArrayList<Item> result = new ArrayList<Item>();
+		for (int index = 0; index != this.items.size(); index++) {
+			result.add(this.items.get(index));
 		}
 		return result;
 	}
 	/**
-	 * findByName. Возвращает первую совпавшую по имени заявку.
+	 * findByName. Возвращает массив совпавших по имени заявок.
 	 * @param name - имя заявки.
 	 * @return Item.
 	 */
-	public Item[] findByName(String name) {
-		Item[] result = new Item[0];
+	public ArrayList<Item> findByName(String name) {
+		ArrayList<Item> result = new ArrayList<Item>();
 		int pos = 0;
-		for (int index = 0; index != this.position; index++) {
-			if (name.equals(this.items[index].getName())) {
-				Item[] buffer = Arrays.copyOf(result, result.length + 1);
-				buffer[pos++] = items[index];
-				result = buffer;
+		for (int index = 0; index != this.items.size(); index++) {
+			if (name.equals(this.items.get(index).getName())) {
+				result.add(this.items.get(index));
 			}
 		}
 		return result;
@@ -149,21 +137,21 @@ public class Tracker {
 	 * getIdsArray. Возвращает массив йадишников элементов трекера.
 	 * @return массив id.
 	 */
-	public String[] getIdsArray() {
-		String[] result = new String[this.getAll().length];
-		for (int i = 0; i != this.getAll().length; i++) {
-			result[i] = this.getAll()[i].getId();
+	public ArrayList<String> getIdsArray() {
+		ArrayList<String> result = new ArrayList<String>();
+		for (int i = 0; i != this.getAll().size(); i++) {
+			result.add(this.getAll().get(i).getId());
 		}
 		return result;
 	}
 	/**
-	 * getNamesArray. Возвращает массив йадишников элементов трекера.
+	 * getNamesArray. Возвращает массив имен элементов трекера.
 	 * @return массив id.
 	 */
-	public String[] getNamesArray() {
-		String[] result = new String[this.getAll().length];
-		for (int i = 0; i != this.getAll().length; i++) {
-			result[i] = this.getAll()[i].getName();
+	public ArrayList<String> getNamesArray() {
+		ArrayList<String> result = new ArrayList<String>();
+		for (int i = 0; i != this.getAll().size(); i++) {
+			result.add(this.getAll().get(i).getName());
 		}
 		return result;
 	}
