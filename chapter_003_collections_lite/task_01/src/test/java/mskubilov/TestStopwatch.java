@@ -23,7 +23,7 @@ public class TestStopwatch {
     public void testStopwatch() {
         Stopwatch stopwatch = new Stopwatch();
         String line = "test string";
-        int amount = 1000000;
+        int amount = 500000;
         ArrayList<String> arrayListString = new ArrayList<String>();
         long sw1 = stopwatch.add(arrayListString, line, amount);
         LinkedList<String> linkedListString = new LinkedList<String>();
