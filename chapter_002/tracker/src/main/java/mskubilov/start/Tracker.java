@@ -46,8 +46,7 @@ public class Tracker {
 		String id = item.getId();
 		for (int index = 0; index != this.items.size(); index++) {
 			if (id.equals(this.items.get(index).getId())) {
-				this.items.remove(index);
-				this.items.add(item);
+				this.items.set(index, item);
 				break;
 			}
 		}
@@ -69,11 +68,7 @@ public class Tracker {
 	 * @return массив всех текущих заявок.
 	 */
 	public ArrayList<Item> getAll() {
-		ArrayList<Item> result = new ArrayList<Item>();
-		for (int index = 0; index != this.items.size(); index++) {
-			result.add(this.items.get(index));
-		}
-		return result;
+		return this.items;
 	}
 	/**
 	 * findByName. Возвращает массив совпавших по имени заявок.
@@ -82,7 +77,6 @@ public class Tracker {
 	 */
 	public ArrayList<Item> findByName(String name) {
 		ArrayList<Item> result = new ArrayList<Item>();
-		int pos = 0;
 		for (int index = 0; index != this.items.size(); index++) {
 			if (name.equals(this.items.get(index).getName())) {
 				result.add(this.items.get(index));
