@@ -48,4 +48,21 @@ public class ConvertList {
         }
         return result;
     }
+
+    /**
+     * convert.
+     * @param list - список одномерных массивов.
+     * @return коллекцию из значений содержимого списка.
+     */
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> result = new ArrayList<>();
+        Iterator it = list.iterator();
+        while(it.hasNext()) {
+            int[] temp = (int[]) it.next();
+            for (int i = 0; i != temp.length; i++) {
+                result.add(temp[i]);
+            }
+        }
+        return result;
+    }
 }

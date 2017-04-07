@@ -2,6 +2,7 @@ package mskubilov;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -39,5 +40,20 @@ public class TestConvertList {
         assertThat(convArray[1].length, is(5));
         assertThat(convArray[1][3], is(9));
         assertThat(convArray[1][4], is(0));
+    }
+    /**
+     * Test of converting of List with int[] elements to ArrayList.
+     */
+    @Test
+    public void testConvertListToList() {
+        List<int[]> list = new ArrayList<int[]>();
+        list.add(new int[] {1, 2, 3});
+        list.add(new int[] {4, 5});
+        list.add(new int[] {6, 7, 8, 9});
+        ConvertList cl = new ConvertList();
+        List<Integer> arrayList = cl.convert(list);
+        assertThat(arrayList.size(), is(9));
+        assertThat(arrayList.get(0), is(1));
+        assertThat(arrayList.get(8), is(9));
     }
 }
