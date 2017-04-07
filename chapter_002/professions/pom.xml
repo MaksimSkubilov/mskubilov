@@ -3,7 +3,7 @@
     <artifactId>task_03</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
-	<name>task_03</name>
+	<name>ch_002_professions</name>
 	
     <parent>
 		<groupId>ru.job4j</groupId>

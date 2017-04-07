@@ -12,9 +12,9 @@
     </parent>
 	
 	<modules>
-        <module>task_03</module>
+        <module>professions</module>
 		<module>task_04_tracker</module>
-		<module>task_05_strategy</module>
+		<module>strategy</module>
 		<module>tracker</module>
 		<module>chess</module>
 		<module>extra_task</module>

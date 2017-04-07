@@ -10,10 +10,10 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>task_03</artifactId>
+    <artifactId>convert_users</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <name>ch_003_03</name>
+    <name>ch_003_convert_users</name>
 
     
 </project>

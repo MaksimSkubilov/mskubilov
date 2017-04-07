@@ -3,7 +3,7 @@
     <artifactId>task_04_tracker</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
-	<name>tracker-1.0</name>
+	<name>ch_002_tracker-1.0</name>
 	
     <parent>
 		<groupId>ru.job4j</groupId>

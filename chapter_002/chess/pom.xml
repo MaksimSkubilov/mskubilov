@@ -3,7 +3,7 @@
     <artifactId>chess</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
-	<name>chess</name>
+	<name>ch_002_chess</name>
 	
     <parent>
 		<groupId>ru.job4j</groupId>

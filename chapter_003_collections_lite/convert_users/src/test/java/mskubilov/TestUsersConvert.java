@@ -1,5 +1,7 @@
 package mskubilov;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,6 +19,7 @@ public class TestUsersConvert {
     /**
      * Test of converting List of Users in HashMap of Users.
      */
+    @Test
     public void testUsersConvert() {
         ArrayList<User> list = new ArrayList<>();
         list.add(new User(1, "John Doe", "Gotham"));
