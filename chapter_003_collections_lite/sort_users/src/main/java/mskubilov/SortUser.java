@@ -24,10 +24,18 @@ public class SortUser {
      * @return отсортированный список.
      */
     public List<User> sortHash(List<User> list) {
-        ArrayList<User> result = new ArrayList<User>(list);
-        HashCompare hc = new HashCompare();
-        result.sort(hc);
-        return result;
+        list.sort(new Comparator<User>() {
+            /**
+             * @param o1 - user1.
+             * @param o2 - user2.
+             * @return -1, 0, 1
+             */
+            @Override
+            public int compare(User o1, User o2) {
+                return Integer.compare(o1.hashCode(), o2.hashCode());
+            }
+        });
+        return list;
     }
     /**
      * sortLength - сортировка списка юзеров по длине имени.
@@ -35,39 +43,17 @@ public class SortUser {
      * @return отсортированный список.
      */
     public List<User> sortLength(List<User> list) {
-        ArrayList<User> result = new ArrayList<User>(list);
-        NameCompare nc = new NameCompare();
-        result.sort(nc);
-        return result;
-    }
-    /**
-     * hashCompare. Внутренний класс, реализующий компаратор по хэш-коду.
-     */
-    private class HashCompare implements Comparator<User> {
-        /**
-         * compare.
-         * @param o1 - первый юзер.
-         * @param o2 - второй бзер.
-         * @return -1, 0 или +1.
-         */
-        @Override
-        public int compare(User o1, User o2) {
-            return Integer.compare(o1.hashCode(), o2.hashCode());
-        }
-    }
-    /**
-     * nameCompare. Внутренний класс, реализующий компаратор по длине иммени.
-     */
-    private class NameCompare implements Comparator<User> {
-        /**
-         * compare.
-         * @param o1 - первый юзер.
-         * @param o2 - второй бзер.
-         * @return -1, 0 или +1.
-         */
-        @Override
-        public int compare(User o1, User o2) {
-            return Integer.compare(o1.getName().length(), o2.getName().length());
-        }
+         list.sort(new Comparator<User>() {
+             /**
+              * @param o1 - user1.
+              * @param o2 - user2.
+              * @return -1, 0, 1
+              */
+            @Override
+            public int compare(User o1, User o2) {
+                return Integer.compare(o1.getName().length(), o2.getName().length());
+            }
+        });
+         return list;
     }
 }
