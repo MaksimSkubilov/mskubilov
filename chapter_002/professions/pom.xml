@@ -1,6 +1,6 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>task_03</artifactId>
+    <artifactId>professions</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
 	<name>ch_002_professions</name>
