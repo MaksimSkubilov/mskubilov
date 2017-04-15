@@ -12,9 +12,8 @@ import java.util.Iterator;
 
 /**
  * Iterator of even numbers only.
- * @param <Integer> - int.
  */
-public class EvenIterator<Integer> implements Iterator<java.lang.Integer> {
+public class EvenIterator implements Iterator {
     /**
      * iterable array.
      */
@@ -32,26 +31,38 @@ public class EvenIterator<Integer> implements Iterator<java.lang.Integer> {
     }
 
     /**
-     * @return hasNext try to return element or not
+     * @return hasNext return has next even element or not
      */
     @Override
     public boolean hasNext() {
-        return index < this.array.length;
+        boolean result = false;
+        for (int i = index; i != this.array.length; i++) {
+            if (this.array[i] % 2 == 0) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     /**
      * @return next even element.
      */
     @Override
-    public java.lang.Integer next() {
-        int result = 0;
-        boolean isEven = false;
-        while (!isEven) {
-            if (this.array[index] % 2 == 0) {
-                isEven = true;
-                result = this.array[index++];
-            } else {
-                index++;
+    public Object next() {
+        return hasNext() ? nextEven() : null;
+    }
+
+    /**
+     * @return next even element.
+     */
+    private Integer nextEven() {
+        Integer result = null;
+        for (int i = index; i != this.array.length; i++) {
+            if (this.array[i] % 2 == 0) {
+                result = this.array[i];
+                index = ++i;
+                break;
             }
         }
         return result;
