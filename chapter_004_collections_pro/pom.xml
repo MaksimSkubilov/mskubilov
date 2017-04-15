@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>chapter_003_collections_lite</artifactId>
+    <artifactId>chapter_004_collections_pro</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
 
@@ -14,12 +14,8 @@
     </parent>
 
     <modules>
-        <module>speed</module>
-        <module>convert_list</module>
-        <module>convert_users</module>
-        <module>sort_users</module>
-        <module>bank</module>
-        <module>visitors</module>
+        <module>iterator</module>
     </modules>
 
+    
 </project>
