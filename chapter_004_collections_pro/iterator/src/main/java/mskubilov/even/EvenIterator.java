@@ -1,6 +1,7 @@
 package mskubilov.even;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * //курс Петра Арсентьева job4j.ru.
@@ -22,12 +23,17 @@ public class EvenIterator implements Iterator {
      * array index position.
      */
     private int index = 0;
+    /**
+     * position of next Even.
+     */
+    private int nextEvenIndex;
 
     /**
      * @param array - iterable array.
      */
     public EvenIterator(int[] array) {
         this.array = array;
+        this.nextEvenIndex = nextEvenIndex();
     }
 
     /**
@@ -35,14 +41,7 @@ public class EvenIterator implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        boolean result = false;
-        for (int i = index; i != this.array.length; i++) {
-            if (this.array[i] % 2 == 0) {
-                result = true;
-                break;
-            }
-        }
-        return result;
+        return nextEvenIndex != -1;
     }
 
     /**
@@ -50,18 +49,26 @@ public class EvenIterator implements Iterator {
      */
     @Override
     public Object next() {
-        return hasNext() ? nextEven() : null;
+        Object result = null;
+        if (hasNext()) {
+            result = this.array[nextEvenIndex];
+            this.index = ++this.nextEvenIndex;
+            this.nextEvenIndex = nextEvenIndex();
+        }
+        if (result == null) {
+            throw new NoSuchElementException("There is not Even numbers left in array!");
+        }
+        return result;
     }
 
     /**
      * @return next even element.
      */
-    private Integer nextEven() {
-        Integer result = null;
+    private int nextEvenIndex() {
+        int result = -1;
         for (int i = index; i != this.array.length; i++) {
             if (this.array[i] % 2 == 0) {
-                result = this.array[i];
-                index = ++i;
+                result = i;
                 break;
             }
         }

@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 /**
  * UnitedIterator.
  */
-public class UnitedIterator implements IteratorConvertion, Iterator<Integer> {
+public class UnitedIterator implements IteratorConversion, Iterator<Integer> {
     /**
      * source Iterator includes several Integer Iterators.
      */

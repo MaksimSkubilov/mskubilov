@@ -13,7 +13,7 @@ import java.util.Iterator;
 /**
  * convert of inner iterators.
  */
-public interface IteratorConvertion {
+public interface IteratorConversion {
     /**
      * @param it Iterator of Integer Iterators to convert.
      * @return Iterator of Integer elements.

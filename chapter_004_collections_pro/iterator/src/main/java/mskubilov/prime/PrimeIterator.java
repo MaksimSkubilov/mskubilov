@@ -2,12 +2,13 @@ package mskubilov.prime;
 
 import java.math.BigInteger;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * //курс Петра Арсентьева job4j.ru.
  *
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @version 1.0
+ * @version 2.0
  * @since 15.04.17
  */
 public class PrimeIterator implements Iterator {
@@ -19,12 +20,16 @@ public class PrimeIterator implements Iterator {
      * array index position.
      */
     private int index = 0;
-
+    /**
+     * position of next Prime.
+     */
+    private int nextPrimeIndex;
     /**
      * @param array - iterable array.
      */
     public PrimeIterator(int[] array) {
         this.array = array;
+        this.nextPrimeIndex = nextPrimeIndex();
     }
 
     /**
@@ -32,16 +37,7 @@ public class PrimeIterator implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        boolean result = false;
-        BigInteger number = null;
-        for (int i = index; i != this.array.length; i++) {
-            number = BigInteger.valueOf(this.array[i]);
-            if (number.isProbablePrime((int) Math.log(12311))) {
-                result = true;
-                break;
-            }
-        }
-        return result;
+       return nextPrimeIndex != -1;
     }
 
     /**
@@ -49,22 +45,31 @@ public class PrimeIterator implements Iterator {
      */
     @Override
     public Object next()  {
-        return hasNext() ? nextPrime() : null;
+        Object result = null;
+        if (hasNext()) {
+            result = this.array[nextPrimeIndex];
+            this.index = ++this.nextPrimeIndex;
+            this.nextPrimeIndex = nextPrimeIndex();
+        }
+        if (result == null) {
+            throw new NoSuchElementException("There is no Prime numbers left in array!");
+        }
+        return result;
     }
 
     /**
      * @return next prime element.
      */
-    private Integer nextPrime() {
-        BigInteger result = null;
+    private int nextPrimeIndex() {
+        int result = -1;
+        BigInteger number = null;
         for (int i = index; i != this.array.length; i++) {
-            result = BigInteger.valueOf(this.array[i]);
-            if (result.isProbablePrime((int) Math.log(12311))) {
-                result = BigInteger.valueOf(this.array[i]);
-                index = ++i;
+            number = BigInteger.valueOf(this.array[i]);
+            if (number.isProbablePrime((int) Math.log(12311))) {
+                result = i;
                 break;
             }
         }
-        return result.intValue();
+        return result;
     }
 }

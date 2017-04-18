@@ -2,6 +2,8 @@ package mskubilov.even;
 
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -49,6 +51,17 @@ public class EvenIteratorTest {
             result += (Integer) it.next();
         }
         assertThat(result, is(8));
+    }
+
+    /**
+     * test of throwing exception.
+     * @throws Exception NoSuchElementException.
+     */
+    @Test (expected = NoSuchElementException.class)
+    public void testThrowingOfException() throws Exception {
+        int[] array = {1, 3};
+        EvenIterator it = new EvenIterator(array);
+        it.next();
     }
 
 }

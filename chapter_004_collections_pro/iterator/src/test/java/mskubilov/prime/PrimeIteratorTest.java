@@ -2,6 +2,8 @@ package mskubilov.prime;
 
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -38,6 +40,17 @@ public class PrimeIteratorTest {
         assertThat(result, is(2));
         result = (int) it.next();
         assertThat(result, is(5));
+    }
+
+    /**
+     * test of throwing exception.
+     * @throws Exception NoSuchElementException.
+     */
+    @Test (expected = NoSuchElementException.class)
+    public void testThrowingOfException() throws Exception {
+        int[] array = {1, 4, 6};
+        PrimeIterator it = new PrimeIterator(array);
+        it.next();
     }
 
 }

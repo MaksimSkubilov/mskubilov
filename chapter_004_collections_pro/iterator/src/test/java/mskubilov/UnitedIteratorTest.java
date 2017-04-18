@@ -50,11 +50,6 @@ public class UnitedIteratorTest {
         }
         result = testIterator.next();
         assertThat(result, is(4));
-        try {
-            testIterator.next();
-        } catch (NoSuchElementException nsee) {
-            assertThat(nsee.getMessage(), is("End of Iterator elements"));
-        }
     }
 
     /**
@@ -70,5 +65,18 @@ public class UnitedIteratorTest {
         int result = testIterator.next();
         assertThat(result, is(4));
         assertThat(testIterator.hasNext(), is(false));
+    }
+
+    /**
+     * test of throwing NoSuchElementException when it calls next() after last element was called.
+     * @throws NoSuchElementException exception.
+     */
+    @Test
+            (expected = NoSuchElementException.class)
+    public void testOfThrowingException() throws NoSuchElementException {
+        int amount = 21;
+        for (int i = 0; i < amount; i++) {
+            testIterator.next();
+        }
     }
 }
