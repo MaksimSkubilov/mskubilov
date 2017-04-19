@@ -17,6 +17,7 @@ public class SimpleQueue<E> extends SimpleLinkedArray<E> {
     /**
      * put element in the end of Queue.
      * @param e element.
+     * @return offer's result.
      */
     public boolean offer(E e) {
         add(e);

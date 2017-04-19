@@ -75,7 +75,7 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
      * remove first element.
      */
     void removeFirst() {
-        if(first.next != null) {
+        if (first.next != null) {
             first.next.prev = null;
             first = first.next;
         } else {
