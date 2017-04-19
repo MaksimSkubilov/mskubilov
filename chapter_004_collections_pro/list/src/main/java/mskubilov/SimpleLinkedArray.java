@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
  * //курс Петра Арсентьева job4j.ru.
  *
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @version 2.0
+ * @version 3.0
  * @since 19.04.17
  */
 
@@ -62,8 +62,25 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
      * remove last element.
      */
     void removeLast() {
-        last.prev.next = null;
-        last = last.prev;
+        if (last.prev != null) {
+            last.prev.next = null;
+            last = last.prev;
+        } else {
+            last = null;
+        }
+
+    }
+
+    /**
+     * remove first element.
+     */
+    void removeFirst() {
+        if(first.next != null) {
+            first.next.prev = null;
+            first = first.next;
+        } else {
+            first = null;
+        }
     }
 
         /**

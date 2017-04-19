@@ -29,13 +29,14 @@ public class SimpleStackTest {
      * test of push() and pop() methods of SimpleLinkedArray.
      */
     @Test
-    public void whenPushElementsAndPopThenItPopsAndDeleteLast() {
+    public void whenPushElementsAndPopThenItPopsAndDeletesLast() {
         SimpleStack<Integer> ss = new SimpleStack<>();
         ss.push(0);
         ss.push(1);
         ss.push(2);
         ss.pop();
+        ss.pop();
         int result = ss.pop();
-        assertThat(result, is(1));
+        assertThat(result, is(0));
     }
 }
