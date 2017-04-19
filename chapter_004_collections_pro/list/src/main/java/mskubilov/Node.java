@@ -48,20 +48,19 @@ public class Node<T> {
      * @return check of cycling.
      */
     public boolean hasCycle(Node<T> first) {
-        boolean result = true;
+        boolean result = false;
         Node<T> current = first;
         Node<T> next = first.getNext();
-        do {
+        while (next != null) {
             current = current.getNext();
             next = next.getNext();
-            if (next.getNext() == null) {
-                result = false;
+            if (next == null) {
+                break;
+            } else if (next.getNext() != null && next.getNext().getNext() != null && next.getNext().getNext() == current) {
+                result = true;
                 break;
             }
-            if (next.getNext().getNext() == current) {
-                break;
-            }
-        } while (true);
+        }
         return result;
     }
 }
