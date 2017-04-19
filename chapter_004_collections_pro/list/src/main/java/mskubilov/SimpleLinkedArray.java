@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
  * //курс Петра Арсентьева job4j.ru.
  *
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @version 1.0
+ * @version 2.0
  * @since 19.04.17
  */
 
@@ -59,44 +59,14 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
     }
 
     /**
-     * @return new iterator for SimpleLinkedArray.
+     * remove last element.
      */
-    @Override
-    public Iterator<E> iterator() {
-        return new Itr();
+    void removeLast() {
+        last.prev.next = null;
+        last = last.prev;
     }
 
-    /**
-     * Nested class of Cell with element and links on neighbour elements.
-     * @param <E> generic.
-     */
-    private static class Cell<E> {
         /**
-         * current element of SimpleLinkedArray.
-         */
-        private E item;
-        /**
-         * next element of SimpleLinkedArray.
-         */
-        private Cell<E> next;
-        /**
-         * previous element of SimpleLinkedArray.
-         */
-        private Cell<E> prev;
-
-        /**
-         * @param prev element of SimpleLinkedArray.
-         * @param element of SimpleLinkedArray.
-         * @param next element of SimpleLinkedArray.
-         */
-        Cell(Cell<E> prev, E element, Cell<E> next) {
-            this.item = element;
-            this.next = next;
-            this.prev = prev;
-        }
-    }
-
-    /**
      * @param index of element to get.
      * @return element by index.
      */
@@ -122,6 +92,21 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
      */
     private boolean isIndexValid(int index) {
         return (index >= 0 && index < size);
+    }
+
+    /**
+     * @return this size.
+     */
+    public int size() {
+        return this.size;
+    }
+
+    /**
+     * @return new iterator for SimpleLinkedArray.
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new Itr();
     }
 
     /**
@@ -154,4 +139,35 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
             return cell(i).item;
         }
     }
+
+    /**
+     * Nested class of Cell with element and links on neighbour elements.
+     * @param <E> generic.
+     */
+    private static class Cell<E> {
+        /**
+         * current element of SimpleLinkedArray.
+         */
+        private E item;
+        /**
+         * next element of SimpleLinkedArray.
+         */
+        private Cell<E> next;
+        /**
+         * previous element of SimpleLinkedArray.
+         */
+        private Cell<E> prev;
+
+        /**
+         * @param prev element of SimpleLinkedArray.
+         * @param element of SimpleLinkedArray.
+         * @param next element of SimpleLinkedArray.
+         */
+        Cell(Cell<E> prev, E element, Cell<E> next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+
 }
