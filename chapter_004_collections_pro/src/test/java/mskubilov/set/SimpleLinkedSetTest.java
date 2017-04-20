@@ -16,6 +16,9 @@ import static org.junit.Assert.*;
  */
 public class SimpleLinkedSetTest {
 
+    /**
+     * whenAddElementThenItAdds.
+     */
     @Test
     public void whenAddElementThenItAdds() {
         SimpleLinkedSet<Integer> ss = new SimpleLinkedSet<>();
@@ -23,6 +26,9 @@ public class SimpleLinkedSetTest {
         assertThat(ss.size(), is(1));
     }
 
+    /**
+     * whenAddSameElementsThenItDoesNotAddThem.
+     */
     @Test
     public void whenAddSameElementsThenItDoesNotAddThem() {
         SimpleLinkedSet<Integer> ss = new SimpleLinkedSet<>();
@@ -34,6 +40,9 @@ public class SimpleLinkedSetTest {
         assertThat(ss.size(), is(3));
     }
 
+    /**
+     * whenUseIteratorThenItWorks.
+     */
     @Test
     public void whenUseIteratorThenItWorks() {
         SimpleLinkedSet<Integer> ss = new SimpleLinkedSet<>();

@@ -17,6 +17,9 @@ import static org.junit.Assert.*;
  */
 public class SimpleSetTest {
 
+    /**
+     * whenAddElementThenItAdds.
+     */
     @Test
     public void whenAddElementThenItAdds() {
         SimpleSet<Integer> ss = new SimpleSet<>(2);
@@ -24,6 +27,9 @@ public class SimpleSetTest {
         assertThat(ss.size(), is(1));
     }
 
+    /**
+     * whenAddElementsThenItIncreasesCapacity.
+     */
     @Test
     public void whenAddElementsThenItIncreasesCapacity() {
         SimpleSet<Integer> ss = new SimpleSet<>(2);
@@ -33,6 +39,9 @@ public class SimpleSetTest {
         assertThat(ss.size(), is(3));
     }
 
+    /**
+     * whenAddSameElementsThenItDoesNotAddThem.
+     */
     @Test
     public void whenAddSameElementsThenItDoesNotAddThem() {
         SimpleSet<Integer> ss = new SimpleSet<>(2);
@@ -44,6 +53,9 @@ public class SimpleSetTest {
         assertThat(ss.size(), is(3));
     }
 
+    /**
+     * whenUseIteratorThenItWorks.
+     */
     @Test
     public void whenUseIteratorThenItWorks() {
         SimpleSet<Integer> ss = new SimpleSet<>(2);
@@ -61,6 +73,9 @@ public class SimpleSetTest {
         assertThat(it.hasNext(), is(false));
     }
 
+    /**
+     * whenTryToGetElementOutOfBoundsThenItTrowsException.
+     */
     @Test
             (expected = NoSuchElementException.class)
     public void whenTryToGetElementOutOfBoundsThenItTrowsException() {

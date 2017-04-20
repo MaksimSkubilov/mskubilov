@@ -46,7 +46,13 @@ public class SimpleLinkedSet<E> implements Iterable<E> {
         return new Itr();
     }
 
+    /**
+     * iiner class of iterator for SimpleLinkedSet.
+     */
     private class Itr implements Iterator<E> {
+        /**
+         * takes iterator from inner LinkedList.
+         */
         private Iterator<E> iterator = values.iterator();
         /**
          * @return availability of next element.
