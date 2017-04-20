@@ -1,7 +1,6 @@
 package mskubilov.set;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * //курс Петра Арсентьева job4j.ru.
@@ -13,9 +12,9 @@ import java.util.LinkedList;
 
 /**
  * SimpleLinkedSet based on LinkedList.
- * @param <E>
+ * @param <E> generic.
  */
-public class SimpleLinkedSet<E> implements Iterable<E> {
+public class SimpleLinkedSet<E extends Comparable> implements Iterable<E> {
     /**
      * inner container of values based on LinkedList.
      */
@@ -25,12 +24,35 @@ public class SimpleLinkedSet<E> implements Iterable<E> {
      * @param e element to add in SimpleLinkedSet.
      */
     public void add(E e) {
-        if (values.contains(e)) {
+        if (simpleBinarySearch(e) == 1) {
             return;
         }
         values.add(e);
     }
 
+    /**
+     * @param e element for searching.
+     * @return result of searching. -1 if element was not found and 1 otherwise.
+     */
+    private int simpleBinarySearch(E e) {
+        int result = -1;
+        List<E> sorted = new ArrayList<>();
+        sorted.addAll(this.values);
+        Collections.sort(sorted);
+        int low = 0, high = this.size();
+        while (low < high) {
+            int mid = (low + high) / 2;
+            if (sorted.get(mid).compareTo(e) == 0) {
+                result = 1;
+                break;
+            } else if (sorted.get(mid).compareTo(e) == -1) {
+                low = mid + 1;
+            } else if (sorted.get(mid).compareTo(e) == 1) {
+                high = mid;
+            }
+        }
+        return result;
+    }
     /**
      * @return size of SimpleLinkedSet.
      */
@@ -47,7 +69,7 @@ public class SimpleLinkedSet<E> implements Iterable<E> {
     }
 
     /**
-     * iiner class of iterator for SimpleLinkedSet.
+     * inner class of iterator for SimpleLinkedSet.
      */
     private class Itr implements Iterator<E> {
         /**
