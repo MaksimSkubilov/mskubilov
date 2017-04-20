@@ -13,15 +13,16 @@ public class User {
     /**
      * User's name.
      */
-    private String name;
+    String name;
     /**
      * Children User has by number.
      */
-    private int children;
+    int children;
+
     /**
      * User's birthday.
      */
-    private Calendar birthday;
+    Calendar birthday;
 
     /**
      * @param name of User.
