@@ -99,4 +99,6 @@ public class SimpleSet<E extends Number> implements Iterator<E> {
         position = i + 1;
         return (E) values[i];
     }
+
+
 }

@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  * //курс Петра Арсентьева job4j.ru.
  *
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @version 1.0
+ * @version 2.0
  * @since 20.04.17
  */
 public class SimpleLinkedSetTest {
@@ -23,21 +23,42 @@ public class SimpleLinkedSetTest {
     public void whenAddElementThenItAdds() {
         SimpleLinkedSet<Integer> ss = new SimpleLinkedSet<>();
         ss.add(0);
-        assertThat(ss.size(), is(1));
+        ss.addOutOfBinary(1);
+        assertThat(ss.size(), is(2));
     }
 
     /**
-     * whenAddSameElementsThenItDoesNotAddThem.
+     * whenAddSameElementsThenItDoesNotAddThemBinary.
      */
     @Test
-    public void whenAddSameElementsThenItDoesNotAddThem() {
+    public void whenAddSameElementsThenItDoesNotAddThemBinary() {
         SimpleLinkedSet<Integer> ss = new SimpleLinkedSet<>();
-        ss.add(0);
-        ss.add(1);
-        ss.add(2);
-        ss.add(1);
-        ss.add(2);
-        assertThat(ss.size(), is(3));
+        for (int i = 0; i < 3000; i++) {
+            ss.add(i);
+        }
+        ss.add(200);
+        ss.add(150);
+        ss.add(134);
+        ss.add(222);
+        ss.add(25);
+        assertThat(ss.size(), is(3000));
+    }
+
+    /**
+     * whenAddSameElementsThenItDoesNotAddThemOutOfBinary.
+     */
+    @Test
+    public void whenAddSameElementsThenItDoesNotAddThemOutOfBinary() {
+        SimpleLinkedSet<Integer> ss = new SimpleLinkedSet<>();
+        for (int i = 0; i < 3000; i++) {
+            ss.addOutOfBinary(i);
+        }
+        ss.addOutOfBinary(200);
+        ss.addOutOfBinary(150);
+        ss.addOutOfBinary(134);
+        ss.addOutOfBinary(298);
+        ss.addOutOfBinary(25);
+        assertThat(ss.size(), is(3000));
     }
 
     /**

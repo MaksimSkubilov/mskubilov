@@ -1,12 +1,14 @@
 package mskubilov.set;
 
+import mskubilov.list.SimpleLinkedArray;
+
 import java.util.*;
 
 /**
  * //курс Петра Арсентьева job4j.ru.
  *
  * @author Maksim Skubilov skubilov89@yandex.ru
- * @version 1.0
+ * @version 2.0
  * @since 20.04.17
  */
 
@@ -18,7 +20,7 @@ public class SimpleLinkedSet<E extends Comparable> implements Iterable<E> {
     /**
      * inner container of values based on LinkedList.
      */
-    private LinkedList<E> values = new LinkedList<E>();
+    private SimpleLinkedArray<E> values = new SimpleLinkedArray<E>();
 
     /**
      * @param e element to add in SimpleLinkedSet.
@@ -29,6 +31,18 @@ public class SimpleLinkedSet<E extends Comparable> implements Iterable<E> {
         }
         values.add(e);
     }
+    /**
+     * @param e element to add in SimpleLinkedSet.
+     */
+    public void addOutOfBinary(E e) {
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()) {
+            if (it.next().equals(e)) {
+                return;
+            }
+        }
+        values.add(e);
+    }
 
     /**
      * @param e element for searching.
@@ -36,8 +50,12 @@ public class SimpleLinkedSet<E extends Comparable> implements Iterable<E> {
      */
     private int simpleBinarySearch(E e) {
         int result = -1;
-        List<E> sorted = new ArrayList<>();
-        sorted.addAll(this.values);
+        List<E> sorted = new ArrayList<E>();
+        Iterator<E> it = this.iterator();
+        int i = 0;
+        while (it.hasNext()) {
+            sorted.add(it.next());
+        }
         Collections.sort(sorted);
         int low = 0, high = this.size();
         while (low < high) {
