@@ -55,4 +55,17 @@ public class UserTest {
         System.out.println(userMap);
     }
 
+    /**
+     * test Map of User with overriding that's equals() and hashcode().
+     */
+    @Test
+    public void testUserHashcodeEqualsMap() {
+        Map<UserOverEquals, Object> userMap = new HashMap<>();
+        UserOverHashcodeEquals user1 = new UserOverHashcodeEquals("John Snow");
+        UserOverHashcodeEquals user2 = new UserOverHashcodeEquals("John Snow");
+        userMap.put(user1, new Object());
+        userMap.put(user2, new Object());
+        System.out.println(userMap);
+    }
+
 }
