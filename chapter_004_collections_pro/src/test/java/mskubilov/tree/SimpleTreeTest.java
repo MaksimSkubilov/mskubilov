@@ -29,6 +29,8 @@ public class SimpleTreeTest {
         tree.addChild(12);
         tree.addChild(11);
         tree.addChild(6);
+        tree.addChild(6);
+        tree.addChild(11);
     }
 
     /**
@@ -48,5 +50,14 @@ public class SimpleTreeTest {
     @Test
     public void testOfGettingAllChildren() {
         assertThat(tree.getChildren().toString(), is("[10, 12, 11, 6]"));
+    }
+
+    /**
+     * test Of searching element.
+     */
+    @Test
+    public void testOfSearchingElement() {
+        assertThat(tree.search(6), is(true));
+        assertThat(tree.search(101), is(false));
     }
 }

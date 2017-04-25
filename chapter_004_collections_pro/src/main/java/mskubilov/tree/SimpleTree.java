@@ -1,6 +1,5 @@
 package mskubilov.tree;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -70,6 +69,46 @@ public class SimpleTree<E extends Comparable> {
                 this.children.add(e);
             }
         }
+    }
+
+    /**
+     * @param e element for searching.
+     * @return result of searching.
+     */
+    public boolean search(E e) {
+        boolean result = false;
+        if (root != null) {
+            result = searchRec(e, root);
+        } else {
+            throw new NoSuchElementException("Tree is empty!");
+        }
+        return result;
+    }
+
+    /**
+     * @param e element for searching.
+     * @param leaf root for recursion.
+     * @return result of recursive searching.
+     */
+    public boolean searchRec(E e, Leaf<E> leaf) {
+        boolean result = false;
+        if (leaf.getLeft() != null) {
+            result = leaf.getLeft().getValue().equals(e);
+            if (result) {
+                return result;
+            } else {
+                result = searchRec(e, leaf.getLeft());
+            }
+        }
+        if (leaf.getRight() != null) {
+            result = leaf.getRight().getValue().equals(e);
+            if (result) {
+                return result;
+            } else {
+                result = searchRec(e, leaf.getRight());
+            }
+        }
+        return result;
     }
 
     /**
