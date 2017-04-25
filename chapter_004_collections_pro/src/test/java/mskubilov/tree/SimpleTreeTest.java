@@ -53,11 +53,23 @@ public class SimpleTreeTest {
     }
 
     /**
-     * test Of searching element.
+     * test of searching element.
      */
     @Test
     public void testOfSearchingElement() {
         assertThat(tree.search(6), is(true));
         assertThat(tree.search(101), is(false));
+    }
+
+    /**
+     * test of balanced tree.
+     */
+    @Test
+    public void testOfBalancedTree() {
+        assertThat(tree.isBalanced(tree.getRoot()), is(false));
+        tree.addChild(13);
+        tree.addChild(5);
+        tree.addChild(7);
+        assertThat(tree.isBalanced(tree.getRoot()), is(true));
     }
 }

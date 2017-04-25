@@ -90,7 +90,7 @@ public class SimpleTree<E extends Comparable> {
      * @param leaf root for recursion.
      * @return result of recursive searching.
      */
-    public boolean searchRec(E e, Leaf<E> leaf) {
+    private boolean searchRec(E e, Leaf<E> leaf) {
         boolean result = false;
         if (leaf.getLeft() != null) {
             result = leaf.getLeft().getValue().equals(e);
@@ -111,6 +111,21 @@ public class SimpleTree<E extends Comparable> {
         return result;
     }
 
+    /**
+     * @param leaf root of tree.
+     * @return balanced tree or not.
+     */
+    public boolean isBalanced(Leaf<E> leaf) {
+        boolean result = true;
+        if ((leaf.getRight() == null && leaf.getLeft() != null) || (leaf.getRight() != null && leaf.getLeft() == null)) {
+            result = false;
+        } else {
+            if(leaf.getLeft() != null && leaf.getRight() != null) {
+                result = isBalanced(leaf.getLeft()) && isBalanced(leaf.getRight());
+            }
+        }
+        return result;
+    }
     /**
      * @return List of all children.
      */
