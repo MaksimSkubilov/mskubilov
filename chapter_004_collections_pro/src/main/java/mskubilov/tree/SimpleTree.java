@@ -78,7 +78,11 @@ public class SimpleTree<E extends Comparable> {
     public boolean search(E e) {
         boolean result = false;
         if (root != null) {
-            result = searchRec(e, root);
+            if (root.getValue().equals(e)) {
+                return true;
+            } else {
+                result = searchRec(e, root);
+            }
         } else {
             throw new NoSuchElementException("Tree is empty!");
         }
@@ -92,21 +96,46 @@ public class SimpleTree<E extends Comparable> {
      */
     private boolean searchRec(E e, Leaf<E> leaf) {
         boolean result = false;
-        if (leaf.getLeft() != null) {
+        if (leaf.getRight() != null) {
+            result = leaf.getRight().getValue().equals(e);
+            if (result) {
+                return true;
+            } else {
+                result = searchRec(e, leaf.getRight());
+            }
+        }
+        if (!result && leaf.getLeft() != null) {
             result = leaf.getLeft().getValue().equals(e);
             if (result) {
-                return result;
+                return true;
             } else {
                 result = searchRec(e, leaf.getLeft());
             }
         }
-        if (leaf.getRight() != null) {
-            result = leaf.getRight().getValue().equals(e);
-            if (result) {
-                return result;
-            } else {
-                result = searchRec(e, leaf.getRight());
-            }
+        return result;
+    }
+
+    /**
+     * @param e element for searching.
+     * @return
+     */
+    public boolean binarySearch(E e) {
+        return binarySearchByLeafs(e, root);
+    }
+
+    /**
+     * @param e element for searching.
+     * @param leaf leaf by leaf.
+     * @return
+     */
+    private boolean binarySearchByLeafs(E e, Leaf<E> leaf) {
+        boolean result = false;
+        if (leaf != null && leaf.getValue().equals(e)) {
+            return true;
+        } else if (leaf.getValue().compareTo(e) > 0 && leaf.getLeft() != null) {
+            result = binarySearchByLeafs(e, leaf.getLeft());
+        } else if (leaf.getValue().compareTo(e) < 0 && leaf.getRight() != null){
+            result = binarySearchByLeafs(e, leaf.getRight());
         }
         return result;
     }

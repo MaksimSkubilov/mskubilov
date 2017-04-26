@@ -20,6 +20,8 @@ public class SimpleTreeTest {
      */
     private SimpleTree<Integer> tree = new SimpleTree<>();
 
+    private SimpleTree<Integer> simpleTree = new SimpleTree<>();
+
     /**
      * Fill SimpleTree with values.
      */
@@ -31,6 +33,14 @@ public class SimpleTreeTest {
         tree.addChild(6);
         tree.addChild(6);
         tree.addChild(11);
+
+
+        for (int i = 490; i > 0; i--) {
+            simpleTree.addChild(i);
+        }
+        for (int i = 490; i < 1000; i++) {
+            simpleTree.addChild(i);
+        }
     }
 
     /**
@@ -53,12 +63,27 @@ public class SimpleTreeTest {
     }
 
     /**
+     * test of binary searching element.
+     */
+    @Test
+    public void testOfBinarySearchingElement() {
+        assertThat(simpleTree.binarySearch(490), is(true));
+        assertThat(simpleTree.binarySearch(999), is(true));
+        assertThat(simpleTree.binarySearch(1), is(true));
+        assertThat(simpleTree.binarySearch(0), is(false));
+        assertThat(simpleTree.binarySearch(1001), is(false));
+    }
+
+    /**
      * test of searching element.
      */
     @Test
     public void testOfSearchingElement() {
-        assertThat(tree.search(6), is(true));
-        assertThat(tree.search(101), is(false));
+        assertThat(simpleTree.search(490), is(true));
+        assertThat(simpleTree.search(999), is(true));
+        assertThat(simpleTree.search(1), is(true));
+        assertThat(simpleTree.search(0), is(false));
+        assertThat(simpleTree.search(1001), is(false));
     }
 
     /**
