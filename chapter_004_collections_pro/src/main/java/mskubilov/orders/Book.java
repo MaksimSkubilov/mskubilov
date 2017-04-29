@@ -97,7 +97,7 @@ public class Book {
             }
 
         }
-        //this.allOrders.remove(id);
+        this.allOrders.remove(id);
     }
 
     /**
