@@ -117,18 +117,15 @@ public class Book {
         } else {
             Double topAsk = asks.firstKey();
             if (topAsk <= bidPrice) {
-                Iterator<Double> it = asks.keySet().iterator();
                 Integer askCount = asks.get(topAsk);
                 Integer bidCount = order.getVolume();
-                it.next();
-                while (it.hasNext() && topAsk <= bidPrice) {
+                while (topAsk <= bidPrice) {
                     if (askCount > bidCount) {
                         asks.put(topAsk, askCount - bidCount);
                         break;
                     } else if (askCount < bidCount) {
                         asks.remove(topAsk);
-                        it = asks.keySet().iterator();
-                        topAsk = it.next();
+                        topAsk = asks.firstKey();
                         bidCount = bidCount - askCount;
                         askCount = asks.get(topAsk);
                     } else {
@@ -157,15 +154,12 @@ public class Book {
         } else {
             Double topBid = bids.firstKey();
             if (topBid >= sellPrice) {
-                Iterator<Double> it = bids.keySet().iterator();
                 Integer bidCount = bids.get(topBid);
                 Integer askCount = order.getVolume();
-                it.next();
-                while (it.hasNext() && topBid >= sellPrice) {
+                while (topBid >= sellPrice) {
                     if (askCount > bidCount) {
                         bids.remove(topBid);
-                        it = bids.keySet().iterator();
-                        topBid = it.next();
+                        topBid = bids.firstKey();
                         askCount = askCount - bidCount;
                         bidCount = bids.get(topBid);
                     } else if (askCount < bidCount) {
