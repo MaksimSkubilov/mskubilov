@@ -45,11 +45,11 @@ public class CounterOfChars extends Thread {
             }
             i++;
         }
-            if (!isInterrupted()) {
-                System.out.printf("Was counted %s chars of '%s'\n", count, sub);
-            } else {
-                System.out.printf("%s was interrupted! Was counted %s chars of '%s' before interruption\n", Thread.currentThread().getName(), count, sub);
-            }
+        if (!isInterrupted()) {
+            System.out.printf("Was counted %s chars of '%s'\n", count, sub);
+        } else {
+            System.out.printf("%s was interrupted! Was counted %s chars of '%s' before interruption\n", Thread.currentThread().getName(), count, sub);
+        }
     }
 
     /**

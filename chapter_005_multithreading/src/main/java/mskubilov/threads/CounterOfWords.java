@@ -50,11 +50,11 @@ public class CounterOfWords extends Thread{
             i++;
         }
 
-            if (!isInterrupted()) {
-                System.out.printf("Was counted %s words\n", count);
-            } else {
-                System.out.printf("%s was interrupted! Was counted %s words before interruption\n", Thread.currentThread().getName(), count);
-            }
+        if (!isInterrupted()) {
+            System.out.printf("Was counted %s words\n", count);
+        } else {
+            System.out.printf("%s was interrupted! Was counted %s words before interruption\n", Thread.currentThread().getName(), count);
+        }
     }
 
     /**
