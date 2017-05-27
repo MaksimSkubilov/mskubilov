@@ -7,7 +7,7 @@ package mskubilov.threads;
  * @version 1.0
  * @since 27.05.17
  */
-public class CounterOfWords extends Thread{
+public class CounterOfWords extends Thread {
     /**
      * Text for counting.
      */
