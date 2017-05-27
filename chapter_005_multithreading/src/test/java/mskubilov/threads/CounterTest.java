@@ -16,9 +16,9 @@ public class CounterTest {
     @Test
     public void whenStartCountingThenShowFinishAfterAllCounting() {
         System.out.println("Start");
-        Thread t1 = new Counter(false, "посчитай    количество   слов в  этой строке");
-        Thread t2 = new Counter(true, " посчитай количество пробелов ");
-        Thread t3 = new Counter('с', "посчитай количество букв 'с'");
+        Thread t1 = new CounterOfWords("посчитай    количество   слов в  этой строке");
+        Thread t2 = new CounterOfChars(' ', " посчитай количество пробелов ");
+        Thread t3 = new CounterOfChars('с', "посчитай количество букв 'с'");
         t2.start();
         t1.start();
         t3.start();
@@ -45,8 +45,8 @@ public class CounterTest {
 
         String text = sb.toString();
         System.out.println("Start");
-        Thread t1 = new Counter(false, text);
-        Thread t2 = new Counter(true, text);
+        Thread t1 = new CounterOfWords(text);
+        Thread t2 = new CounterOfChars(' ', text);
         t1.start();
         t2.start();
 

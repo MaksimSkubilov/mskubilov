@@ -5,15 +5,9 @@ package mskubilov.threads;
  *
  * @author Maksim Skubilov skubilov89@yandex.ru
  * @version 1.0
- * @since 25.05.17
+ * @since 27.05.17
  */
-public class Counter extends Thread {
-
-    /**
-     * Flag of counting (chars or words).
-     */
-    private boolean isChar = true;
-
+public class CounterOfWords extends Thread{
     /**
      * Text for counting.
      */
@@ -25,21 +19,10 @@ public class Counter extends Thread {
     private char sub = ' ';
 
     /**
-     * @param isSpace - choose of counting words or spaces.
      * @param text - text for counting.
      */
-    public Counter(boolean isSpace, String text) {
+    public CounterOfWords(String text) {
         this.text = text;
-        this.isChar = isSpace;
-    }
-
-    /**
-     * @param sub - not default char for counting.
-     * @param text - text for counting.
-     */
-    public Counter(char sub, String text) {
-        this.text = text;
-        this.sub = sub;
     }
 
     /**
@@ -53,13 +36,7 @@ public class Counter extends Thread {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        while (!isInterrupted() && isChar && i < this.text.length()) {
-            if (this.text.charAt(i) == sub) {
-                count++;
-            }
-            i++;
-        }
-        while (!isInterrupted() && !isChar && i < this.text.length()) {
+        while (!isInterrupted() && i < this.text.length()) {
             if (this.text.charAt(i) != sub) {
                 count++;
                 for (int j = i; j != this.text.length(); j++) {
@@ -72,20 +49,12 @@ public class Counter extends Thread {
             }
             i++;
         }
-        if (isChar) {
-            if (!isInterrupted()) {
-                System.out.printf("Was counted %s chars of '%s'\n", count, sub);
-            } else {
-                System.out.printf("%s was interrupted! Was counted %s chars of '%s' before interruption\n", Thread.currentThread().getName(), count, sub);
-            }
-        } else if (!isChar) {
+
             if (!isInterrupted()) {
                 System.out.printf("Was counted %s words\n", count);
             } else {
                 System.out.printf("%s was interrupted! Was counted %s words before interruption\n", Thread.currentThread().getName(), count);
             }
-
-        }
     }
 
     /**
