@@ -75,7 +75,7 @@ public class UserStorage {
      * @param id User's id.
      * @return User instance if found, else null.
      */
-    public User getUserById(int id) {
+    public synchronized User getUserById(int id) {
         User result = null;
         if (storage.containsKey(id)) {
             result = storage.get(id);

@@ -36,7 +36,7 @@ public class User {
     /**
      * @return this.account.
      */
-    public double getAccount() {
+    public synchronized double getAccount() {
         return account;
     }
 
