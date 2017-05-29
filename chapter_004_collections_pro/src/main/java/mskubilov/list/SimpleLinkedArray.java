@@ -34,7 +34,7 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
      * @param e element E.
      */
     @Override
-    public void add(E e) {
+    public synchronized void add(E e) {
         final Cell<E> l = last;
         final Cell<E> newNode = new Cell<E>(l, e, null);
         last = newNode;
@@ -51,7 +51,7 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
      * @return element by index.
      */
     @Override
-    public E get(int index) {
+    public synchronized E get(int index) {
         if (!isIndexValid(index)) {
             throw new IndexOutOfBoundsException();
         }
@@ -61,7 +61,7 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
     /**
      * remove last element.
      */
-    void removeLast() {
+    synchronized void removeLast() {
         if (last.prev != null) {
             last.prev.next = null;
             last = last.prev;
@@ -74,7 +74,7 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
     /**
      * remove first element.
      */
-    void removeFirst() {
+    synchronized void removeFirst() {
         if (first.next != null) {
             first.next.prev = null;
             first = first.next;
@@ -107,14 +107,14 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
      * @param index to validate.
      * @return index validation.
      */
-    private boolean isIndexValid(int index) {
+    private synchronized boolean isIndexValid(int index) {
         return (index >= 0 && index < size);
     }
 
     /**
      * @return this size.
      */
-    public int size() {
+    public synchronized int size() {
         return this.size;
     }
 
@@ -139,7 +139,7 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
          * @return availability of next element.
          */
         @Override
-        public boolean hasNext() {
+        public synchronized boolean hasNext() {
             return position < size;
         }
 
@@ -147,7 +147,7 @@ public class SimpleLinkedArray<E> implements SimpleContainer<E> {
          * @return current element and goes to next position.
          */
         @Override
-        public E next() {
+        public synchronized E next() {
             int i = position;
             if (i == size) {
                 throw new NoSuchElementException();

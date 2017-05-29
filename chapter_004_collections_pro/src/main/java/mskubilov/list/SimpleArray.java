@@ -58,7 +58,7 @@ public class SimpleArray<E> implements SimpleContainer<E> {
      * @param e element E.
      */
     @Override
-    public void add(E e) {
+    public synchronized void add(E e) {
         ensureCapacity();
         this.values[size++] = e;
     }
@@ -68,7 +68,7 @@ public class SimpleArray<E> implements SimpleContainer<E> {
      * @return element by index.
      */
     @Override
-    public E get(int index) {
+    public synchronized E get(int index) {
         return (E) this.values[index];
     }
 
@@ -93,7 +93,7 @@ public class SimpleArray<E> implements SimpleContainer<E> {
          * @return availability of next element.
          */
         @Override
-        public boolean hasNext() {
+        public synchronized boolean hasNext() {
             return position < size;
         }
 
@@ -101,7 +101,7 @@ public class SimpleArray<E> implements SimpleContainer<E> {
          * @return current element and goes to next position.
          */
         @Override
-        public E next() {
+        public synchronized E next() {
             int i = position;
             if (i >= size) {
                 throw new NoSuchElementException();
