@@ -77,7 +77,7 @@ public class Searcher {
         Path source = file.toPath();
         try {
             String fileType = Files.probeContentType(source);
-            if(fileType != null && fileType.equals("text/plain")) {
+            if (fileType != null && fileType.equals("text/plain")) {
                 this.allFiles.add(file);
             }
         } catch (IOException e) {
@@ -102,7 +102,7 @@ public class Searcher {
     }
 
     /**
-     * Searches text in some file
+     * Searches text in some file.
      */
     private void search() {
         int i = 0;
@@ -110,7 +110,7 @@ public class Searcher {
         String line;
         File file;
         try {
-            while(this.allThreads.size() != 0) {
+            while (this.allThreads.size() != 0) {
                 if (i == 0) {
                     file = this.allFiles.pollFirst(2, TimeUnit.SECONDS);
                     i++;
@@ -193,10 +193,5 @@ public class Searcher {
                 search();
             }
         };
-    }
-
-    public static void main(String[] args) {
-        Searcher searcher = new Searcher("some text", true);
-        searcher.searchTextInFile();
     }
 }
