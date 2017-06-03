@@ -18,12 +18,23 @@ public class ThreadPoolTest {
     @Test
     public void testThreadPool() {
         ThreadPool tp = new ThreadPool();
-        tp.fillWork(50);
         tp.execute();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        for (int i = 1; i <= 50;) {
+            for (int j = 0; j < 5; j++) {
+                tp.add(tp.new Work(i + j ));
+            }
+            i = i + 4;
+            try {
+                Thread.sleep(8);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

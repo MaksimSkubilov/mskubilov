@@ -1,8 +1,8 @@
 package mskubilov.notifywait;
 
 import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * //курс Петра Арсентьева job4j.ru.
@@ -19,10 +19,11 @@ public class ThreadPool {
     /**
      * Queue filled by Work to do.
      */
-    private BlockingQueue<Work> workQueue;
+    private final BlockingQueue<Work> workQueue;
 
     public ThreadPool() {
         this.threadList = new ArrayList<>();
+        this.workQueue = new LinkedBlockingQueue<>();
         fillThreadList();
     }
 
@@ -35,12 +36,23 @@ public class ThreadPool {
 
                 @Override
                 public void run() {
-                    try {
-                        while (workQueue.size() > 0) {
-                            workQueue.take().doWork();
+                    while (isAlive()) {
+                        synchronized (workQueue) {
+                            while (workQueue.isEmpty()) {
+                                try {
+                                    System.out.printf("%s is waiting for work\n", Thread.currentThread().getName());
+                                    workQueue.wait();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        try {
+                            workQueue.take().doWork();
+                            Thread.sleep(5);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
@@ -58,12 +70,17 @@ public class ThreadPool {
 
     /**
      * Fill Queue with Work Pool to do.
-     * @param workCount count of Work.
+     * @param work Work.
      */
-    public void fillWork(int workCount) {
-        this.workQueue = new ArrayBlockingQueue<Work>(workCount);
-        for (int i = 1; i <= workCount; i++) {
-            this.workQueue.add(new Work(i));
+    public void add(Work work) {
+        synchronized (this.workQueue) {
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.workQueue.add(work);
+            workQueue.notify();
         }
     }
 
