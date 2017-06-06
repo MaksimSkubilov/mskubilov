@@ -4,10 +4,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * //курс Петра Арсентьева job4j.ru.
@@ -18,52 +16,83 @@ import java.util.concurrent.TimeUnit;
  */
 
 /**
- * Concurrent Searcher. Searches for some text in all .txt files from file system.
- * First starts max to 2 Threads for scanning all system's txt.files, and then 1 Thread for searching some text in them files, concurrently with scanning.
+ * Concurrent Searcher. Searches for some text in all .txt files of file system.
+ * First starts 3 Threads for scanning root of users choice for txt.files and directories,
+ * and then starts 1 Thread for searching some text in files, concurrently with scanning directories by ThreadPoolExecutor.
  */
 public class Searcher {
     /**
-     * Some text for searching match.
+     * Some text for searching match. Default false, changes by User's choice .
      */
-    private String text;
+    private String text = null;
     /**
-     * If true then process stops when found first match.
+     * If true then process stops when found first match. Default false, changes by User's choice.
      */
-    private boolean stopper;
+    private AtomicBoolean stopper = new AtomicBoolean(false);
     /**
-     * All PC's file system catalogs.
+     * Catalogs for searching text.
      */
-    private static final File[] ROOTS = File.listRoots();
+    private final File[] roots;
     /**
-     * Index of catalog in this.ROOTS for starting threads and using it by them.
+     * Index of catalog in this.roots for starting threads and using it by them.
      */
     private volatile int rootIndex = 0;
     /**
-     * Concurrent Deque of all founded .txt files on board.
+     * Concurrent Deque of all found .txt files in directory.
      */
-    private BlockingDeque<File> allFiles = new LinkedBlockingDeque<>();
+    private final BlockingDeque<File> allFiles = new LinkedBlockingDeque<>();
     /**
-     * List of Threads searching all txt. files
+     * Concurrent Queue of all found directories for executor.
      */
-    private List<Thread> allThreads = new CopyOnWriteArrayList<>();
+    private final BlockingQueue<File> allDirs = new LinkedBlockingQueue<>();
     /**
-     * @param text for searching.
-     * @param stopper for searching. If true program stops when found first match.
+     * List of starting Threads outside executor.
      */
-    public Searcher(String text, boolean stopper) {
-        this.text = text;
-        this.stopper = stopper;
+    private final List<Thread> startingThreads = new CopyOnWriteArrayList<>();
+    /**
+     * Thread Pool for searching dir's and files.
+     */
+    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(
+            0, Runtime.getRuntime().availableProcessors(), 0L, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+
+    /**
+     * Construct Searcher.
+     * @param searchDir directory for searching.
+     */
+    Searcher(String searchDir) {
+        if (searchDir.equals("0")) {
+            this.roots = File.listRoots();
+        } else {
+            this.roots = new File(searchDir).listFiles();
+        }
     }
 
     /**
-     * Starts to fill this.allFiles with all system .txt files.
+     * Set stopper by User's entering.
+     */
+    void setStopperTrue() {
+        stopper.set(true);
+    }
+
+    /**
+     * Set text by User's entering.
+     * @param text some text.
+     */
+    void setText(String text) {
+        this.text = text;
+    }
+
+    /**
+     * Starts to fill this.allFiles with all system .txt files. Using it justified because of User choosing to scan all files
+     * on Windows and File.listFiles() returns floppy and system gets shock trying to scan it=).
      * @param i number of catalog in this.Roots.
      */
     private void fillAllFiles(int i) {
-        for (; i < ROOTS.length;) {
-            File[] dir = ROOTS[i].listFiles();
-            if (dir != null) {
-                searchDirectory(dir);
+        for (; i < roots.length;) {
+            if (roots[i] != null) {
+                executor.execute(searchDirectory(roots[i]));
+            } else {
+                searchFile(roots[i]);
             }
             i = rootIndex++;
         }
@@ -87,18 +116,25 @@ public class Searcher {
 
     /**
      * Searches directory (and recursively calls itself when finds directory) and files in directory.
-     * @param dir directory.
+     * @param file some directory.
+     * @return new Runnable object.
      */
-    private void searchDirectory(File[] dir) {
-        if (dir != null) {
-            for (int i = 0; i < dir.length; i++) {
-                if (dir[i].isDirectory()) {
-                    searchDirectory(dir[i].listFiles());
-                } else {
-                    searchFile(dir[i]);
+    private Runnable searchDirectory(File file) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                File[] files = file.listFiles();
+                if (file.isDirectory() && files != null) {
+                    for (int i = 0; i < files.length; i++) {
+                        if (files[i].isDirectory()) {
+                            allDirs.add(files[i]);
+                        } else {
+                            searchFile(files[i]);
+                        }
+                    }
                 }
             }
-        }
+        };
     }
 
     /**
@@ -109,13 +145,26 @@ public class Searcher {
         FileReader streamFromFile;
         String line;
         File file;
+        File dir;
         try {
-            while (this.allThreads.size() != 0) {
+            while (text == null) {
+                dir = allDirs.poll(1, TimeUnit.SECONDS);
+                if (dir != null) {
+                    executor.execute(searchDirectory(dir));
+                }
+            }
+            while (!executor.isShutdown()) {
+                dir = allDirs.poll(1, TimeUnit.SECONDS);
+                if (dir == null && allFiles.isEmpty() && allDirs.isEmpty() && executor.getActiveCount() == 0) {
+                    executor.shutdownNow();
+                } else if (dir != null) {
+                    executor.execute(searchDirectory(dir));
+                }
                 if (i == 0) {
-                    file = this.allFiles.pollFirst(2, TimeUnit.SECONDS);
+                    file = this.allFiles.pollFirst();
                     i++;
                 } else {
-                    file = this.allFiles.pollLast(2, TimeUnit.SECONDS);
+                    file = this.allFiles.pollLast();
                     i--;
                 }
                 if (file != null) {
@@ -124,9 +173,10 @@ public class Searcher {
                     while ((line = streamReader.readLine()) != null) {
                         if (line.contains(text)) {
                             System.out.printf("%s %s\n", "Found file", file.getAbsolutePath());
-                            if (stopper) {
+                            if (stopper.get()) {
                                 System.out.println("Stopping all threads...");
-                                for (Thread thread : this.allThreads) {
+                                executor.shutdownNow();
+                                for (Thread thread : this.startingThreads) {
                                     thread.interrupt();
                                 }
                                 Thread.currentThread().interrupt();
@@ -135,34 +185,39 @@ public class Searcher {
                         }
                     }
                 }
-                for (Thread thread : this.allThreads) {
-                    if (!thread.isAlive() || thread.isInterrupted()) {
-                        this.allThreads.remove(thread);
-                    }
-                }
             }
         } catch (FileNotFoundException e) {
             //restart search() if thrown FileNotFoundException
             search();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Starts threads for filling files and searching text.
+     * @return textSearchThread reference.
      */
-    public void searchTextInFile() {
+    Thread startSearching() {
         Thread t;
-        while (this.rootIndex <= 1) {
+        while (this.rootIndex < Runtime.getRuntime().availableProcessors() - 1) {
             t = filesSearchThread(rootIndex++);
-            this.allThreads.add(t);
+            this.startingThreads.add(t);
             t.start();
         }
         t = textSearchThread();
         t.start();
+        return t;
+    }
+
+    /**
+     * Method for awaiting searching results.
+     * @param t textSearchThread reference.
+     */
+    void awaitResults(Thread t) {
+        System.out.println("Start of searching.");
         try {
             t.join();
             System.out.println("End of searching.");
@@ -189,9 +244,9 @@ public class Searcher {
     private Thread textSearchThread() {
         return new Thread() {
             public void run() {
-                System.out.println("Start of searching.");
                 search();
             }
         };
     }
+
 }
