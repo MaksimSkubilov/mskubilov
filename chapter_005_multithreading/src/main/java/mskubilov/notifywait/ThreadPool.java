@@ -21,6 +21,9 @@ public class ThreadPool {
      */
     private final BlockingQueue<Work> workQueue;
 
+    /**
+     * Construct of Object.
+     */
     public ThreadPool() {
         this.threadList = new ArrayList<>();
         this.workQueue = new LinkedBlockingQueue<>();
@@ -90,8 +93,15 @@ public class ThreadPool {
      */
     public class Work {
 
+        /**
+         * Work's number.
+         */
         private int workNumber;
 
+        /**
+         * Construct of Work.
+         * @param number work's number.
+         */
         public Work(int number) {
             this.workNumber = number;
         }

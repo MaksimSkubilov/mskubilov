@@ -27,7 +27,7 @@ public class ThreadPoolTest {
 
         for (int i = 1; i <= 50;) {
             for (int j = 0; j < 5; j++) {
-                tp.add(tp.new Work(i + j ));
+                tp.add(tp.new Work(i + j));
             }
             i = i + 4;
             try {
