@@ -44,9 +44,11 @@ public abstract class Element {
         if (cell != null) {
             synchronized (cell) {
                 if (cell.getElement() == null) {
-                    this.cell.setElement(null);
-                    leashACellWithElement(cell);
-                    result = true;
+                    synchronized (this.cell) {
+                        this.cell.setElement(null);
+                        leashACellWithElement(cell);
+                        result = true;
+                    }
                 }
             }
         }
