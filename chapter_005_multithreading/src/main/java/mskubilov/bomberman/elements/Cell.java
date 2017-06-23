@@ -1,5 +1,8 @@
 package mskubilov.bomberman.elements;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * //курс Петра Арсентьева job4j.ru.
  *
@@ -20,6 +23,11 @@ public class Cell {
      * Y coordinate.
      */
     private final int y;
+
+    /**
+     * Cell's lock.
+     */
+    private final Lock lock = new ReentrantLock();
 
     /**
      * Construct new Cell.
@@ -61,4 +69,10 @@ public class Cell {
         return y;
     }
 
+    /**
+     * @return this cell's lock.
+     */
+    public Lock getLock() {
+        return lock;
+    }
 }

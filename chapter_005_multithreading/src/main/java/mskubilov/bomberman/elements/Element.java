@@ -2,6 +2,9 @@ package mskubilov.bomberman.elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * //курс Петра Арсентьева job4j.ru.
@@ -26,7 +29,8 @@ public abstract class Element {
 
     /**
      * Construct new Element.
-     * @param cell which Element places.
+     *
+     * @param cell  Element places into.
      * @param board of game.
      */
     public Element(Cell cell, Cell[][] board) {
@@ -36,19 +40,25 @@ public abstract class Element {
 
     /**
      * Move element. Base method move would be used in extended classes as supportive.
+     *
      * @param cell to move Element.
      * @return true if move successful, false otherwise.
      */
     public boolean move(Cell cell) {
         boolean result = false;
+        Cell cellFrom = this.cell;
         if (cell != null) {
-            synchronized (cell) {
-                if (cell.getElement() == null) {
-                    synchronized (this.cell) {
+            if (cell.getLock().tryLock()) {
+                cellFrom.getLock().lock();
+                try {
+                    if (cell.getElement() == null) {
                         this.cell.setElement(null);
                         leashACellWithElement(cell);
                         result = true;
                     }
+                } finally {
+                    cell.getLock().unlock();
+                    cellFrom.getLock().unlock();
                 }
             }
         }
@@ -76,6 +86,7 @@ public abstract class Element {
         }
         return cell;
     }
+
     /**
      * @return Cell if move down on board, null if move outside.
      */
@@ -88,6 +99,7 @@ public abstract class Element {
         }
         return cell;
     }
+
     /**
      * @return Cell if move right on board, null if move outside.
      */
@@ -100,6 +112,7 @@ public abstract class Element {
         }
         return cell;
     }
+
     /**
      * @return Cell if move left on board, null if move outside.
      */
@@ -115,6 +128,7 @@ public abstract class Element {
 
     /**
      * Fill this.moves.
+     *
      * @return List of moves.
      */
     private List<Cell> possibleMoves() {
@@ -128,6 +142,7 @@ public abstract class Element {
 
     /**
      * Leash Cell and Element.
+     *
      * @param cell to leash.
      */
     private void leashACellWithElement(Cell cell) {
